@@ -39,20 +39,24 @@ data() {
 },
 methods : {
     handle_login(){
-        console.log("requsting the backend to login")
-        axios.post("localhost:3000/login",{
+      
+        axios.post("/login",{
             "username" : this.username,
             "password" : this.password
             }).then((res)=>{
-                console.log(res);
+                if(res.status == 201)
+                {
+                    console.log(res);
+                    this.$router.push("/")
+                    localStorage.setItem('token',res.data.token)
+
+                }
             }).catch((e)=>{
                 console.log(e);
             })
     },
 },
-mounted(){
-    console.log("requsting the backend to login")
-}
+
 }
 </script>
 

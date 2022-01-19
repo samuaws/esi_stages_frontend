@@ -40,14 +40,17 @@ data() {
 methods : {
     handle_signup(){
         console.log("requsting the backend to login")
-        axios.post("localhost:3000/login",{
+        axios.post("/signup",{
             "username" : this.username,
             "password" : this.password,
             "email" : this.email,
             "last_Name" : this.last_Name,
             "first_Name" : this.first_Name,
             }).then((res)=>{
-                console.log(res);
+                if(res.status == 201)
+                {
+                    this.$router.push("/")
+                }
             }).catch((e)=>{
                 console.log(e);
             })
