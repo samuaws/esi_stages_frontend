@@ -77,6 +77,7 @@ h3{
 }
 body{
     background: #093545;
+    background-repeat: no-repeat;
     
 }
 input{

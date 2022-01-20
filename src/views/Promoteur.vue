@@ -1,12 +1,12 @@
 <template>
   <div class="container3" >
   <div class="div-left">
-      <h1 class="name"> Pr . kack ben hamouda</h1>
+      <h1 class="name"> Pr. {{this.promoteur.last_Name}} <br> {{this.promoteur.first_Name}}</h1>
       <ul>
-          <li class="att">email : avfhaghagjgh@aahjcahj.com</li>
-          <li class="att">domaine : abfhabfjajhakjfh , jakbcjaknjkan</li>
+          <li class="att">email : {{this.promoteur.email}}</li>
+          <li class="att">domaine : {{this.promoteur.domaine}}</li>
       </ul>
-      <h3 class="att"  >Specialist in kicking ass and taking names , also sometimes does coding and stuff, you know , nerd stuff</h3>
+      <h3 class="att"  >{{this.promoteur.discription}}</h3>
   </div>
   <div class="div-right">
       <img class="big" src="../assets/vince-fleming-_THUISs23CI-unsplash 1.png" alt="">
@@ -16,15 +16,26 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
 name : "Promoteur",
+data(){
+   return {
+        id :this.$route.params.id,
+        promoteur : {}
+    }
+},
+async created(){
+    const h = await axios.get("/promoteur/"+this.id)
+    this.promoteur = h.data
+}
 }
 </script>
 
 <style scope>
 .name{
   margin-top:5%;
-  margin-bottom:20% ;
+  margin-bottom:25% ;
  font-family: Lexend Deca;
 font-style: normal;
   color: #FFFFFF;
@@ -45,13 +56,15 @@ line-height: 36px;
 
 }
 body{
-  background-color : white; 
-    background-image : url("../assets/full name.svg") ;
-    background-size: cover;
+ 
     
        
 }
 .container3{
+    background-color : white; 
+    background-image : url("../assets/full name.svg") ;
+    background-size: cover;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: row;
     width: 100%;
