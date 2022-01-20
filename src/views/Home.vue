@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <h3 class="yess" >Welcome {{ this.user.data.first_Name }}</h3>
+    
+    <h3 v-if="show" class="yess" >Welcome {{ this.user.data.first_Name }}</h3>
+    <button v-on:click="signout" >signout</button>
     
   </div>
 </template>
@@ -9,6 +11,7 @@
 <script>
 // @ is an alias to /src
 import axios from 'axios'
+
 export default {
   name: 'Home',
   components: {
@@ -18,6 +21,7 @@ export default {
     return {
 
       user:undefined,
+      show:false,
     }
   },
   
@@ -25,16 +29,35 @@ export default {
  async created(){
     //axios.get("/users",{token:"fhsfhbshfbjhb"})
     //axiostest().then(res => console.log(res))
-     this.user = await axios.get("users",{
-       headers : {
-                   Authorization:'Bearer '+localStorage.getItem('token')
-    }
-  })
-      console.log(this.user.data.first_Name);
+     if(localStorage.getItem('token'))
+      {
+       
+          this.user = await axios.get("users",{
+            headers : {
+                        Authorization:'Bearer '+localStorage.getItem('token')
+        }
+      })
+      }
+  if(this.user){
+    this.show = true 
+  }
+      //console.log(this.user.data.first_Name);
   },
+  methods:{
+
+    signout(){
+      if(localStorage.getItem('token'))
+      {
+        localStorage.removeItem('token');
+      }
+    }
+  }
 }
 </script>
 <style scoped>
+body{
+ background: #093545;
+}
 .yess{
   font-size: 10em;
   color:white;
