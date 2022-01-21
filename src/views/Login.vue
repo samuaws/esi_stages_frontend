@@ -13,6 +13,7 @@
                 
                 <input  type="text" placeholder="Username" v-model="username">
                 <input  type="password" placeholder="Password" v-model="password">
+                <br>
                 <button v-on:click="handle_login">Login</button> 
 
             </form>
@@ -108,7 +109,7 @@ button{
 }
 .container{
   display: absolute;
-  
+
   max-width: 500px;
   margin: auto auto;
   min-height: 300px;
