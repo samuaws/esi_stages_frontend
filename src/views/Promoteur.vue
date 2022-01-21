@@ -1,16 +1,16 @@
 <template>
   <div class="container3" >
-  <div class="div-left">
-      <h1 class="name"> Pr. {{this.promoteur.last_Name}} <br> {{this.promoteur.first_Name}}</h1>
-      <ul>
-          <li class="att">email : {{this.promoteur.email}}</li>
-          <li class="att">domaine : {{this.promoteur.domaine}}</li>
-      </ul>
-      <h3 class="att"  >{{this.promoteur.discription}}</h3>
-  </div>
-  <div class="div-right">
-      <img class="big" src="../assets/vince-fleming-_THUISs23CI-unsplash 1.png" alt="">
-  </div>
+    <div class="div-left">
+        <h1 class="name"> Pr. {{this.promoteur.last_Name}} <br> {{this.promoteur.first_Name}}</h1>
+        <ul>
+            <li class="att">email : {{this.promoteur.email}}</li>
+            <li class="att">domaine : {{this.promoteur.domaine}}</li>
+        </ul>
+        <h3 class="att"  >{{this.promoteur.discription}}</h3>
+    </div>
+    <div class="div-right">
+        <img class="big" src="../assets/vince-fleming-_THUISs23CI-unsplash 1.png" alt="">
+    </div>
       
  </div>
 </template>
@@ -55,11 +55,7 @@ font-size: 24px;
 line-height: 36px;
 
 }
-body{
- 
-    
-       
-}
+
 .container3{
     background-color : white; 
     background-image : url("../assets/full name.svg") ;
@@ -68,6 +64,11 @@ body{
     display: flex;
     flex-direction: row;
     width: 100%;
+     position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
 }
 .div-left{   
     left: 0;

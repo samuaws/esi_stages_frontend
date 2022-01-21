@@ -60,8 +60,14 @@ methods : {
 }
 </script>
 
-<style scope>
+<style scoped>
+    body{
+       
+        background-repeat: no-repeat;
+        
+    }
 .text {
+   
   font-family: Lexend Deca;
   font-style: normal;
   color: #FFFFFF;
@@ -74,11 +80,6 @@ h1 {
 h3{
     margin: 0.6em;
     font-weight: 100;
-}
-body{
-    background: #093545;
-    background-repeat: no-repeat;
-    
 }
 input{
 background: #224957;
@@ -136,6 +137,14 @@ width: 100%;
     bottom:55px; 
     width: 100%; 
     height: 11%;
+}
+.everything{
+   background: #093545;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
 }
 
 

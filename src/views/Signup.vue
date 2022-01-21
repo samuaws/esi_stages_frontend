@@ -62,7 +62,7 @@ mounted(){
 }
 </script>
 
-<style scope>
+<style scoped>
 .text {
   font-family: Lexend Deca;
   font-style: normal;
@@ -77,10 +77,7 @@ h3{
     margin: 0.6em;
     font-weight: 100;
 }
-body{
-    background: #093545;
-    
-}
+
 input{
 background: #224957;
 padding : 20px;
@@ -137,6 +134,14 @@ width: 100%;
     bottom:55px; 
     width: 100%; 
     height: 11%;
+}
+.everything{
+   background: #093545;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
 }
 
 
