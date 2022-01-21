@@ -3,8 +3,10 @@
     <div class="container">
         <div class="head-div">
              <!-- <img src="../assets/STAGE.png" alt="">  -->
+             
         </div>
-      <div v-if="!yes"  class="stage">
+      
+        <div v-if="!yes"  class="stage">
 
             <h2>Type :{{this.stage.Type}}</h2>
             <h4>description :{{this.stage.descrition}}</h4>
@@ -27,16 +29,18 @@
                 <button v-on:click="handle_submit">submite</button> 
                </form>
             </div>
+      
     </div>
 
 </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
     name:"Stages",
     data() {
     return {
-       id :this.$route.params.id,
+        id :this.$route.params.id,
         stage : {},
         yes:false
     }
@@ -44,10 +48,13 @@ export default {
     methods:{
       onClick(){
          this.yes=!this.yes
-      }
-       }
-    }
-
+      },
+      async created(){
+    const h = await axios.get(`stage/${this.id}`)
+    this.stage = h.data
+},
+}
+}
 </script>
 <style scoped>
 
@@ -98,4 +105,6 @@ background: #FFFFFF;
     margin: 0 auto;
    min-height: 300px;
 }
+
+
 </style>
