@@ -4,21 +4,72 @@
             <!-- <img src="../assets/importance-of-internship.jpg" alt="">  -->
              <h1>FIND YOUR STAGE YA LHABSINE TA3 L'ESI</h1>
         </div> 
-      
-        <div v-if="!yes"  class="stage">
-
-            <h2>Type :{{this.stage.Type}}</h2>
-            <h4>description :{{this.stage.description}}</h4>
-            <h5>date debut :{{this.stage.dateDeb}}</h5>
-            <h5>date fin :{{this.stage.dateFin}}</h5>
-            <h5>encadreur :{{this.stage.Encadreur}}</h5>
-            <h5>promoteur :{{this.stage.promoteur}}</h5>
+        <!-- <div  v-for="stg in this.stage" :key="stg._id" > 
+        <div     class="stage">
+            <h2>Type :{{sstgtg.Type}}</h2>
+            <h4>description :{{stg.description}}</h4>
+            <h5>date debut :{{stg.dateDeb}}</h5>
+            <h5>date fin :{{stg.dateFin}}</h5>
+            <h5>encadreur :{{stg.Encadreur}}</h5>
+            <h5>promoteur :{{stg.promoteur}}</h5>
         </div>
-          <button @click="onClick()" class="btn-right">add</button>
+       </div> -->
+       <button @click="onClick()" class="btn-right">add</button>
+       
+       <v-list class="formd2" v-if="!yes" two-line>
+      <v-list-item-group
+        v-model="selected"
+        active-class="pink--text"
+        multiple
+      >
+        <template   v-for="(stg, index) in this.stage" >
+          <v-list-item :key="stg.description">
+            <template v-slot:default="{ active }">
+              <v-list-item-content >
+                <v-list-item-title v-text="stg.description"></v-list-item-title>
+
+                <v-list-item-subtitle
+                  class="text--primary"
+                  v-text="stg.description"
+                ></v-list-item-subtitle>
+
+                <v-list-item-subtitle  v-text="stg.description"></v-list-item-subtitle>
+              </v-list-item-content>
+
+              <v-list-item-action>
+                <v-list-item-action-text v-text="stg.description"></v-list-item-action-text>
+
+                <v-icon
+                  v-if="!active"
+                  color="grey lighten-1"
+                >
+                  mdi-star-outline
+                </v-icon>
+
+                <v-icon
+                  v-else
+                  color="yellow darken-3"
+                >
+                  mdi-star
+                </v-icon>
+              </v-list-item-action>
+            </template>
+          </v-list-item>
+
+          <v-divider
+            v-if="index < stage.length - 1"
+            :key="index"
+          ></v-divider>
+        </template>
+      </v-list-item-group>
+    </v-list>
+          
            <div class="formd">
              <form v-if="yes" class ="form1" action="" @submit.prevent>
                 <input  type="text" placeholder="Type" v-model="Type">
-                <textarea  type="text" placeholder="Description" v-model="description">
+                <!-- <textarea rows="4" cols="50" placeholder="Description" v-model="description"> </textarea> -->
+                
+                <input  type="text" placeholder="Date de Debut" v-model="description">
                 <input  type="text" placeholder="Date de Debut" v-model="dateDeb">
                 <input  type="text" placeholder="date de Fin" v-model="dateFin">
                 <input  type="text" placeholder="encadreur" v-model="Encadreur">
@@ -51,7 +102,7 @@ export default {
     },
     async created(){
         console.log("sjjsvsbjvbsshbvsbvhsbvhsbvjh");
-        const h = await axios.get("/stage/"+this.id);
+        const h = await axios.get("/stage");
         this.stage = h.data
         console.log(this.stage);
 },
@@ -60,15 +111,20 @@ export default {
          this.yes=!this.yes
       },
     handle_submit(){
-        console.log("requsting the backend to login")
-        axios.post("/",{
+        axios.post("/stage",{
             "Type" : this.Type,
             "description" : this.description,
             "dateDeb" : this.dateDeb,
             "dateFin" : this.dateFin,
             "Encadreur" : this.Encadreur,
             "promoteur" : this.promoteur,
+            },
+            {
+                 headers : {
+            Authorization:'Bearer '+localStorage.getItem('token')
+             }
             }).then((res)=>{
+                console.log("LYDIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 if(res.status == 201)
                 {
                     this.$router.push("/")
@@ -77,12 +133,12 @@ export default {
                 console.log(e);
             })
     },
-}
+    }
 }
 </script>
 <style scoped>
 .everything{
-  background: #093545;
+  
 }
 .text{
   font-family: Lexend Deca;
@@ -156,6 +212,12 @@ color: #FFFFFF;
     display: flex;
     flex-direction: column;
     padding: auto;
+
+}
+.formd2{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 
 }
 

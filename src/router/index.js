@@ -32,7 +32,7 @@ const routes = [
     component: Promoteur
   },
   {
-    path: '/stages/:id',
+    path: '/stages',
     name: 'Stages',
     component: Stages
   },

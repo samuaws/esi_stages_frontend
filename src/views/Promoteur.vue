@@ -9,7 +9,7 @@
         <h3 class="att"  >{{this.promoteur.discription}}</h3>
     </div>
     <div class="div-right">
-        <img class="big" src="../assets/vince-fleming-_THUISs23CI-unsplash 1.png" alt="">
+        <img class="big" src="../assets/36541247_1750617655045181_5665836890272563200_n.jpg" alt="">
     </div>
       
  </div>
@@ -77,12 +77,12 @@ line-height: 36px;
 
 }
 .div-right{
-    margin-top: 10%;
+    margin-top: 15%;
     width: 50%;
     
 }
 .big{
-    width: 22em;
+    width: 25em;
 }
 
 </style>

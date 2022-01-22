@@ -56,9 +56,7 @@ methods : {
             })
     },
 },
-mounted(){
-    console.log("requsting the backend to login")
-}
+
 }
 </script>
 
