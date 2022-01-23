@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Promoteur from "../views/Promoteur.vue"
 import Stages from "../views/Stages.vue"
+import Stage from "../views/Stage.vue"
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,11 @@ const routes = [
     path: '/stages',
     name: 'Stages',
     component: Stages
+  },
+  {
+    path: '/stage/:id',
+    name: 'Stage',
+    component: Stage
   },
 ]
 

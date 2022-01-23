@@ -45,14 +45,14 @@ letter-spacing: 0.54em;
 }
 
 .att{
-margin-bottom: 5%;
- font-family: Lexend Deca;
-  font-style: normal;
-  font-style: normal;
-  color:  #093545;
- font-weight: 500;
-font-size: 24px;
-line-height: 36px;
+    margin-bottom: 5%;
+    font-family: Lexend Deca;
+    font-style: normal;
+    font-style: normal;
+    color:  #093545;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
 
 }
 
@@ -64,11 +64,11 @@ line-height: 36px;
     display: flex;
     flex-direction: row;
     width: 100%;
-     position:absolute;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
 }
 .div-left{   
     left: 0;
