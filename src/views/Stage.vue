@@ -106,7 +106,11 @@ export default {
     console.log(this.id);
     const h = await axios.get("/stage/"+this.id)
     this.stage = h.data
-   try{ const u = await axios.get("/users",);console.log(u);  }catch(e){console.log(e);}
+   try{ const u = await axios.get("/users", {
+                 headers : {
+            Authorization:'Bearer '+localStorage.getItem('token')
+             }
+            });console.log(u);  }catch(e){console.log(e);}
     
     },
 }
