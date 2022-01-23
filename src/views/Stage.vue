@@ -16,7 +16,7 @@
                     <h5 class="textd" >promoteur :{{this.stage.promoteur.last_Name}}</h5>
                     <h5 class="textd" >entreprise :{{this.stage.entreprise.name}}</h5>
                 </div>
-                <button @click="onClick">update</button>      
+                <button v-if="this.user.is_Admin" @click="onClick">update</button>      
                 <div class="formd">
                     <form v-if="yes" class ="form1" action="" @submit.prevent>
                     <input  type="text" placeholder="name" v-model="name">
@@ -61,7 +61,8 @@ export default {
         promoteur : undefined,
         group : undefined,
         entreprise : undefined,
-        annee : undefined
+        annee : undefined,
+        user : undefined
         }
     },
     methods:{
@@ -110,7 +111,7 @@ export default {
                  headers : {
             Authorization:'Bearer '+localStorage.getItem('token')
              }
-            });console.log(u);  }catch(e){console.log(e);}
+            });console.log(u); this.user = u.data ;  }catch(e){console.log(e);}
     
     },
 }

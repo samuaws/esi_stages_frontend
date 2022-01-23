@@ -9,6 +9,7 @@
         <div class="container">
             <h1 class="text " >Log in </h1>
             <h3 class="text ">veuillez vous connecter a votre compte </h3>
+            <h3 v-if="error" class="text error2 ">wrong username or password</h3>
             <form class ="form-div" action="" @submit.prevent>
                 
                 <input  type="text" placeholder="Username" v-model="username">
@@ -35,6 +36,7 @@ data() {
     return {
         username : undefined,
         password : undefined,
+        error : false
         }
 
 },
@@ -52,8 +54,9 @@ methods : {
                     localStorage.setItem('token',res.data.token)
 
                 }
-            }).catch((e)=>{
-                console.log(e);
+            }).catch(()=>{
+                this.error = true;
+                console.log(this.error);
             })
     },
 },
@@ -72,6 +75,9 @@ methods : {
   font-family: Lexend Deca;
   font-style: normal;
   color: #FFFFFF;
+}
+.error2{
+    color: red;
 }
 h1 {
    font-weight: 700; 

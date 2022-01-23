@@ -4,7 +4,7 @@
              <h1>FIND YOUR STAGE YA LHABSINE TA3 L'ESI</h1>
         </div> 
 
-       <button @click="onClick()" class="btn-right">add</button>
+       <button v-if="user.is_Admin" @click="onClick()" class="btn-right">add</button>
        
        <v-list class="formd2" v-if="!yes" two-line>
       <v-list-item-group
@@ -13,8 +13,8 @@
         multiple
       >
         <template   v-for="(stg, index) in this.stage" >
-          <v-list-item :key="stg.description">
-            <template v-slot:default="{ active }">
+          <v-list-item @click="showStage(stg._id)" :key="stg.description">
+            <template >
               <v-list-item-content >
                 <v-list-item-title v-text="stg.name"></v-list-item-title>
                        
@@ -26,27 +26,51 @@
               
               </v-list-item-content>
 
-              
-              
-
-                <v-icon
-                  v-if="!active"
-                  color="grey lighten-1"
-                >
-                  mdi-star-outline
-                </v-icon>
-
-                <v-icon
-                  v-else
-                  color="yellow darken-3"
-                >
-                  mdi-star
-                </v-icon>
-            
-    
             </template>
           </v-list-item>
-          <v-btn  @click="handel_delete(stg._id)"  :key="stg._id"> delete</v-btn>
+          <!-- <v-btn v-if="user.is_Admin" @click="handel_delete(stg._id)"  :key="stg._id"> delete</v-btn> -->
+          <v-row justify="center" :key="stg.description">
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="290"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+          @click="card = true"
+        >
+          Delete
+        </v-btn>
+      </template>
+      <v-card >
+        <v-card-title class="text-h5" >
+          Use Google's location service?
+        </v-card-title>
+        <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="card = false"
+          >
+            Disagree
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="handel_delete(stg._id)"
+          >
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
           <v-divider
             v-if="index < stage.length - 1"
             :key="index"
@@ -96,14 +120,23 @@ export default {
         promoteur : undefined,
         group : undefined,
         entreprise : undefined,
-        annee : undefined
+        annee : undefined,
+        user : undefined,
+        card : false,
     }
     },
     async created(){
         const h = await axios.get("/stage");
         this.stage = h.data
         console.log(this.stage);
-
+        const u = await axios.get("/users", {
+                 headers : {
+            Authorization:'Bearer '+localStorage.getItem('token')
+             }
+            });
+            console.log(u); 
+            this.user = u.data ;
+            console.log(this.user.is_Admin);
      
 },
     props: ['selected'],
@@ -160,6 +193,9 @@ export default {
       x = x.name 
       return `${x} . ${y} .${z} / ${k}`
     },
+    showStage(id){
+      this.$router.push("/stage/"+id)
+    }
 
 
  }
