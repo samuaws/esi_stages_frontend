@@ -199,9 +199,7 @@ color: #FFFFFF;
   padding: 10px;
 
 }
-.info-big{
 
-}
 .stage{
     left : 0px
 }

@@ -1,7 +1,7 @@
 <template>
 <div class="everything">
         <div class="head-div">
-             <h1>FIND YOUR STAGE YA LHABSINE TA3 L'ESI</h1>
+             <h1>FIND YOUR promoteur YA LHABSINE TA3 L'ESI</h1>
         </div> 
 
        <button v-if="user.is_Admin" @click="onClick()" class="btn-right">add</button>
@@ -12,15 +12,15 @@
         active-class="pink--text"
         multiple
       >
-        <template   v-for="(stg, index) in this.stage" >
-          <v-list-item @click="showStage(stg._id)" :key="stg.description">
+        <template   v-for="(prm, index) in this.promoteur" >
+          <v-list-item @click="showPromoteur(prm._id)" :key="prm.description">
             <template >
               <v-list-item-content >
-                <v-list-item-title v-text="stg.name"></v-list-item-title>
+                <v-list-item-title v-text="showtext(prm.last_Name,prm.first_Name)"></v-list-item-title>
                        
                 <v-list-item-subtitle
                   class="text--primary"
-                  v-text="showtext(stg.entreprise,stg.Type,stg.dateDeb.substring(0,10),stg.dateFin.substring(0,10))"
+                  v-text="prm.domaine"
                 ></v-list-item-subtitle>
 
               
@@ -28,8 +28,8 @@
 
             </template>
           </v-list-item>
-          <!-- <v-btn v-if="user.is_Admin" @click="handel_delete(stg._id)"  :key="stg._id"> delete</v-btn> -->
-          <v-row justify="center" :key="stg.description">
+          <!-- <v-btn v-if="user.is_Admin" @click="handel_delete(prm._id)"  :key="prm._id"> delete</v-btn> -->
+          <v-row justify="center" :key="prm.description">
     <v-dialog
       v-model="dialog"
       persistent
@@ -61,10 +61,9 @@
             Disagree
           </v-btn>
           <v-btn
-            v-if="user.is_Admin"
             color="green darken-1"
             text
-            @click="handel_delete(stg._id)"
+            @click="handel_delete(prm._id)"
           >
             Agree
           </v-btn>
@@ -73,7 +72,7 @@
     </v-dialog>
   </v-row>
           <v-divider
-            v-if="index < stage.length - 1"
+            v-if="index < promoteur.length - 1"
             :key="index"
           ></v-divider>
         </template>
@@ -82,16 +81,11 @@
           
            <div class="formd">
              <form v-if="yes" class ="form1" action="" @submit.prevent>
-               <input  type="text" placeholder="name" v-model="name">
-               <input  type="text" placeholder="type" v-model="Type">
-                <input  type="text" placeholder="description" v-model="description">
-                <input  type="date" placeholder="Date de Debut" v-model="dateDeb">
-                <input  type="date" placeholder="date de Fin" v-model="dateFin">
-                <input  type="text" placeholder="encadreur" v-model="Encadreur">
-                <input  type="text" placeholder="groupe" v-model="group">
-                <input  type="text" placeholder="promoteur" v-model="promoteur">
-                <input  type="text" placeholder="entreprise" v-model="entreprise">
-                <input  type="text" placeholder="annee" v-model="annee"> 
+               <input  type="text" placeholder="first_name" v-model="first_Name">
+               <input  type="text" placeholder="last_Name" v-model="last_Name">
+                <input  type="text" placeholder="email" v-model="email">
+                <input  type="text" placeholder="domaine" v-model="domaine">
+                <input  type="text" placeholder="discription" v-model="discription">
                 <div class="bricolage">
                     <button v-on:click="handle_submit">submit</button> 
                 </div>
@@ -105,29 +99,23 @@
 <script>
 import axios from 'axios'
 export default {
-    name:"Stages",
+    name:"Promoteurs",
     data() {
     return {
         id :0,
-        stage : {},
+        promoteur : {},
         yes:false,
 
-        name : undefined,
-        Type : undefined,
-        description  : undefined,
-        dateDeb : undefined,
-        dateFin : undefined,
-        Encadreur : undefined,
-        promoteur : undefined,
-        group : undefined,
-        entreprise : undefined,
-        annee : undefined,
-        user : undefined,
-        card : false,
+        first_Name : undefined,
+        last_Name : undefined,
+        email  : undefined,
+        discription : undefined,
+        domaine : undefined,
+        user : undefined
     }
     },
     async created(){
-       const u = await axios.get("/users", {
+         const u = await axios.get("/users", {
                  headers : {
             Authorization:'Bearer '+localStorage.getItem('token')
              }
@@ -135,13 +123,14 @@ export default {
             console.log(u); 
             this.user = u.data ;
             console.log(this.user.is_Admin);
-       if(this.user.is_Admin)
-      { const h = await axios.get("/stage");
-        this.stage = h.data
-        console.log(this.stage);}
-        else{
-          const h = await axios.get("/stage/available");
-        this.stage = h.data
+            if(this.user.is_Admin)
+         { 
+           const h = await axios.get("/promoteur");
+        this.promoteur = h.data
+        console.log(this.promoteur);
+        }else {
+             const h = await axios.get("/promoteur/available");
+             this.promoteur = h.data
         }
        
      
@@ -152,17 +141,12 @@ export default {
          this.yes=!this.yes
       },
     handle_submit(){
-        axios.post("/stage",{
-            "name" : this.name,
-            "Type" : this.Type,
-            "description" : this.description,
-            "dateDeb" : this.dateDeb,
-            "dateFin" : this.dateFin,
-            "Encadreur" : this.Encadreur,
-            "promoteur" : this.promoteur,
-            "group" : this.group,
-            "entreprise" : this.entreprise,
-            "annee" : this.annee,
+        axios.post("/promoteur",{
+        "first_Name" : this.first_Name,
+        "last_Name" : this.last_Name,
+        "email"  :this.email,
+        "discription" : this.discription,
+        "domaine" : this.domaine,
             },
             {
                  headers : {
@@ -172,7 +156,7 @@ export default {
 
                 if(res.status == 201)
                 {
-                    this.$router.push("/")
+                    location.reload()
                 }
             }).catch((e)=>{
                 console.log(e);
@@ -180,7 +164,7 @@ export default {
             console.log(this.dateDeb);
     },
     handel_delete(id){
-      axios.delete("/stage/"+id,
+      axios.delete("/promoteur/"+id,
       {
                  headers : {
             Authorization:'Bearer '+localStorage.getItem('token')
@@ -188,20 +172,12 @@ export default {
     })
     location.reload();
     },
-   async  show(x){
-    
-    var  h = await axios.get("/entreprise/"+x)
-     x=h.data.name 
-     return await x
-     
-     
+
+    showtext(x,y){
+      return `${x} ${y}`
     },
-    showtext(x,y,z,k){
-      x = x.name 
-      return `${x} . ${y} .${z} / ${k}`
-    },
-    showStage(id){
-      this.$router.push("/stage/"+id)
+    showPromoteur(id){
+      this.$router.push("/promoteur/"+id)
     }
 
 
