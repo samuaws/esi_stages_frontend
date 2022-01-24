@@ -139,9 +139,10 @@ export default {
       { const h = await axios.get("/stage");
         this.stage = h.data
         console.log(this.stage);}
-        else{
+        else{  
           const h = await axios.get("/stage/available");
         this.stage = h.data
+        console.log(this.stage);
         }
        
      
