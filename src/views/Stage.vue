@@ -5,36 +5,66 @@
         </div>  
 
             <div class="info-big">
+            <div class="wow">
                 <div class="info">
                 <div v-if="!yes"  class="stage">
                     <h2 class="textd" >{{this.stage.name}}</h2>
                     <h4 class="textd" >Type :{{this.stage.Type}}</h4>
-                    <h4 class="textd" >description :{{this.stage.description}}</h4>
+                    <h4 class="textd" >description: <br> {{this.stage.description}}</h4>
                     <h5 class="textd" >date debut :{{this.stage.dateDeb.substring(0,10)}}</h5>
                     <h5 class="textd" >date fin :{{this.stage.dateFin.substring(0,10)}}</h5>
                     <h5 class="textd" >encadreur :{{this.stage.Encadreur.last_Name}}</h5>
                     <h5 class="textd" >promoteur :{{this.stage.promoteur.last_Name}}</h5>
-                    <h5 class="textd" >entreprise :{{this.stage.entreprise.name}}</h5>
+                    <h5 class="textd"  v-if="this.user.is_Admin" >entreprise :{{this.stage.entreprise.name}}</h5>
+                          <h5 class="textd" v-if="this.user.is_Admin" >annee :{{this.stage.annee}}</h5>
+                    <div class="bric">
+                        <h5 class="textd" v-if="!this.user.is_Admin" >entreprise :{{this.stage.entreprise.name}}</h5>
+                        <h5 class="textd" v-if="this.user.is_Admin">groupe:{{this.stage.group}}</h5>
+                        <button class="bric-btn" v-if="this.user.is_Admin" @click=" onClick">update</button>    
+                        <button class="bric-btn1" v-if="!this.user.is_Admin" @click="onClickApply">Apply now</button>    
+                    </div>
                 </div>
-                <button v-if="this.user.is_Admin" @click="onClick">update</button>      
-                <div class="formd">
+                </div>
+                <div class="formd" v-if="yes && !lyes">
                     <form v-if="yes" class ="form1" action="" @submit.prevent>
-                    <input  type="text" placeholder="name" v-model="name">
-                    <input  type="text" placeholder="type" v-model="Type">
-                        <input  type="text" placeholder="description" v-model="description">
-                        <input  type="date" placeholder="Date de Debut" v-model="dateDeb">
-                        <input  type="date" placeholder="date de Fin" v-model="dateFin">
-                        <input  type="text" placeholder="encadreur" v-model="Encadreur">
-                        <input  type="text" placeholder="groupe" v-model="group">
-                        <input  type="text" placeholder="promoteur" v-model="promoteur">
-                        <input  type="text" placeholder="entreprise" v-model="entreprise">
-                        <input  type="text" placeholder="annee" v-model="annee"> 
-                        <div class="bricolage">
-                            <button v-on:click="handle_submit">submit</button> 
+                        <div class="form-left">
+                                <input  type="text" placeholder="name" v-model="name">
+                                <input  type="text" placeholder="type" v-model="Type">
+                                <input  type="text" placeholder="description" v-model="description">
+                                <input  type="date" placeholder="Date de Debut" v-model="dateDeb">
+                                <input  type="date" placeholder="date de Fin" v-model="dateFin">
+                                <button class="bla" v-if="this.user.is_Admin" @click="onClick">cancel  </button> 
                         </div>
+                        <div class="form-right">
+                             <input  type="text" placeholder="encadreur" v-model="Encadreur">
+                            <input  type="text" placeholder="groupe" v-model="group">
+                            <input  type="text" placeholder="promoteur" v-model="promoteur">
+                            <input  type="text" placeholder="entreprise" v-model="entreprise">
+                            <input  type="text" placeholder="annee" v-model="annee"> 
+                            <div class="bricolage">
+                                    <button v-on:click=" handle_submit">submit</button>                         
+                                </div>
+                        </div>
+                        </form>
+                  </div>     
+                  
+                <div class="form-div" v-if="lyes">
+                    <form v-if="lyes" class ="form2" action="" @submit.prevent>
+                                <input  type="text" placeholder="nom" v-model="nom">
+                                <input  type="text" placeholder="matricule 1" v-model="matricule1">
+                                <input v-if="!ouvrier" type="text" placeholder="matricule 2" v-model="matricule2">
+                                <input v-if="!ouvrier" type="text" placeholder="matricule 3" v-model="matricule3"> 
+                                <div class="bricolage2">
+                                <button class="bla"  @click="onClickApply">cancel  </button> 
+                                    <button v-on:click=" handle_apply">submit</button>      
+                                                    
+                                </div>
                     </form>
                 </div>
-                </div> 
+                   
+                    
+                
+              </div>   
             </div> 
 
    
@@ -49,10 +79,11 @@ export default {
     name:"Stage",
     data() {
     return {
-         stage :{},
-         id :this.$route.params.id,    
-         yes:false,
-          name : undefined,
+        stage :{},
+        id :this.$route.params.id,    
+        yes:false,
+        lyes:false,
+        name : undefined,
         Type : undefined,
         description  : undefined,
         dateDeb : undefined,
@@ -61,15 +92,28 @@ export default {
         promoteur : undefined,
         group : undefined,
         entreprise : undefined,
+        Available : undefined,
         annee : undefined,
-        user : undefined
+        matricule1: undefined,
+        matricule2: undefined,
+        matricule3: undefined,
+        nom: undefined,
+        technique: undefined,
+        ouvrier: undefined,
+        PFE: undefined,
+        user : undefined,
+        etudiants : []
         }
     },
     methods:{
       onClick(){
          this.yes=!this.yes
       },
-     
+      onClickApply(){
+          this.lyes=!this.lyes
+          this.yes=!this.yes 
+
+      },
     handle_submit(){
         console.log(this.Encadreur);
          this.yes=!this.yes
@@ -100,13 +144,40 @@ export default {
             })
             console.log(this.dateDeb);
     },
-   
+    async handle_apply(){
+        const grp = await axios.post("/group",{
+            "name" : this.nom,
+            "type" : this.stage.Type,
+            "m1":this.matricule1,
+            "m2":this.matricule2,
+            "m3":this.matricule3,
+            "m4":this.user.matricule
 
- },
+        },
+         {
+                 headers : {
+            Authorization:'Bearer '+localStorage.getItem('token')
+             }
+            }
+        )
+        console.log(grp.data._id);
+        await axios.put("/stage/grp/"+this.stage._id,{
+            "grp_id" : grp.data._id
+        })
+    }
+    },
   async created(){
     console.log(this.id);
     const h = await axios.get("/stage/"+this.id)
     this.stage = h.data
+    switch (this.stage.Type){
+     case 'PFE': this.PFE=true;
+     break;
+     case 'technique' : this.technique=true
+     break;
+     case 'ouvrier' : this.ouvrier=true
+     break;
+     }
    try{ const u = await axios.get("/users", {
                  headers : {
             Authorization:'Bearer '+localStorage.getItem('token')
@@ -129,16 +200,20 @@ export default {
 }
 h2 {
    font-weight: 700; 
-  
+    
    font-size: 4em;
 }
 h4{
-    margin: 0.6em;
+    margin: 2em;
     font-weight: 100;
+    text-align: start;
+    font-size: 2.5em;
 }
 h5{
-    margin: 0.6em;
+    margin: 2em;
     font-weight: 100;
+    text-align: start;
+    font-size: 2em;
 }
 .head-div{
   background-image: url("../assets/kevin-bhagat-zNRITe8NPqY-unsplash.jpg");
@@ -150,6 +225,13 @@ h5{
   left:0px;
   background-size: cover;
   background-position: center;
+}
+.stage{
+    
+  background: #224957;
+  border-radius: 0.5em;
+  padding:0%;
+  margin-right:0%
 }
 
 
@@ -166,7 +248,7 @@ font-family: Lexend Deca;
 font-style: normal;
 color: #FFFFFF;
 width: 20%;
-/* make it go to bottom */
+
 }
 input{
 background: #093545;
@@ -179,10 +261,11 @@ font-style: normal;
 color: #FFFFFF;
 }
 .formd{
+    background: #224957;
     display: flex;
     flex-direction: column;
     border-radius: 1em;
-    max-width: 500px;
+    max-width: 65%;
     align-content: center;
     margin: 0 auto;
     min-height: 300px;
@@ -193,6 +276,12 @@ color: #FFFFFF;
     padding: auto;
 
 }
+.bricolage2{
+    display: flex;
+    flex-direction: row;
+    padding: auto;
+
+}
 .formd2{
   margin: auto;
   width: 50%;
@@ -200,10 +289,8 @@ color: #FFFFFF;
 
 }
 
-.stage{
-    left : 0px
-}
 .info{
+    background:#093545;
     display: flex;
     left:0;
     margin-top: 5%;
@@ -211,8 +298,56 @@ color: #FFFFFF;
     margin-left: 10%;
     flex-direction: column;
     border-radius: 3%;
-    background:#224957
+    
 }
+.bric{
+    display: flex;
+    justify-content: space-between;
+    transform: translate( 0% ,-40%);
+}
+.bric-btn{
+    max-height: 4em;
+ 
+    margin: 0.5em;
+    margin-right:5%;
+    
+}
+.form1{
+    display: flex;
+    flex-direction: row;
+}
+.form-left{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.form-right{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.bla{
+    margin: auto;
+    background-color: red;
+}
+.form-div{
+    background: #224957;
+    border-radius: 1em;
+    max-width: 56%;
+    align-content: center;
+    margin: 0 auto;
+    min-height: 300px;
+    
+}
+.form2{
+    display: flex;
+    flex-direction: column;
+    padding-right:20%;
+    padding-left:20%;
+    padding-top:3%
+}
+
 
 
 </style>

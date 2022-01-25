@@ -13,14 +13,14 @@
         multiple
       >
         <template   v-for="(stg, index) in this.stage" >
-          <v-list-item @click="showStage(stg._id)" :key="stg.description">
+          <v-list-item class="item" @click="showStage(stg._id)" :key="stg.description">
             <template >
               <v-list-item-content >
                 <v-list-item-title v-text="stg.name"></v-list-item-title>
                        
                 <v-list-item-subtitle
                   class="text--primary"
-                  v-text="showtext(stg.entreprise,stg.Type,stg.dateDeb.substring(0,10),stg.dateFin.substring(0,10))"
+                  v-text="showtext(stg.entreprise,stg.Type,stg.dateDeb,stg.dateFin)"
                 ></v-list-item-subtitle>
 
               
@@ -28,8 +28,8 @@
 
             </template>
           </v-list-item>
-          <!-- <v-btn v-if="user.is_Admin" @click="handel_delete(stg._id)"  :key="stg._id"> delete</v-btn> -->
-          <v-row justify="center" :key="stg.description">
+          
+         <v-row justify="center" :key="stg.description">
     <v-dialog
       v-model="dialog"
       persistent
@@ -41,28 +41,29 @@
           dark
           v-bind="attrs"
           v-on="on"
+          v-if="user.is_Admin"
           @click="card = true"
         >
           Delete
         </v-btn>
       </template>
-      <v-card >
-        <v-card-title class="text-h5" >
-          Use Google's location service?
+      <v-card>
+        <v-card-title class="text-h6" >
+          Supprimer le stage ?
         </v-card-title>
-        <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+        
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="green darken-1"
+            color="white "
             text
-            @click="card = false"
+            class="buttonr"
+            @click="reload"
           >
-            Disagree
+            cancel
           </v-btn>
           <v-btn
-            v-if="user.is_Admin"
-            color="green darken-1"
+            color="white"
             text
             @click="handel_delete(stg._id)"
           >
@@ -199,12 +200,19 @@ export default {
     },
     showtext(x,y,z,k){
       x = x.name 
+      if (z && k)
+      {
+        z = z.substring(0,10)
+        k = k.substring(0,10)
+      }
       return `${x} . ${y} .${z} / ${k}`
     },
     showStage(id){
       this.$router.push("/stage/"+id)
-    }
-
+    },
+    reload(){
+    location.reload();
+    },
 
  }
 }
@@ -258,6 +266,19 @@ font-family: Lexend Deca;
 font-style: normal;
 color: #FFFFFF;
 }
+.buttonr{
+background: red;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+border-radius: 0.5em;
+border: none;
+padding: 20px 20px;
+margin: 1.2em;
+font-size: 1em;
+font-weight: 500;
+font-family: Lexend Deca;
+font-style: normal;
+color: #FFFFFF;
+}
 input{
 background: #224957;
 padding : 20px 50px;
@@ -293,9 +314,11 @@ color: #FFFFFF;
 .formd2{
   margin: auto;
   width: 50%;
-  padding: 10px;
+ 
 
 }
-
+.item{
+  padding: 20px;
+}
 
 </style>

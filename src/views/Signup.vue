@@ -8,6 +8,7 @@
                 <input  type="text" placeholder="Username" v-model="username">
                 <input  type="text" placeholder="firstname" v-model="first_Name">
                 <input  type="text" placeholder="lastname" v-model="last_Name">
+                <input  type="text" placeholder="matricule" v-model="matricule">
                 <input  type="text" placeholder="email" v-model="email">
                 <input  type="password" placeholder="Password" v-model="password">
                 <button v-on:click="handle_signup">Signup</button> 
@@ -34,21 +35,25 @@ data() {
         first_Name : undefined,
         last_Name : undefined,
         email : undefined,
+        matricule : undefined,
         }
 
 },
 methods : {
     handle_signup(){
-        console.log("requsting the backend to login")
+        
         axios.post("/signup",{
             "username" : this.username,
             "password" : this.password,
             "email" : this.email,
             "last_Name" : this.last_Name,
             "first_Name" : this.first_Name,
+            "matricule" : this.matricule,
+           
             }).then((res)=>{
                 if(res.status == 201)
                 {
+                    console.log("requsting the backend to login")
                     this.$router.push("/")
                 }
             }).catch((e)=>{
@@ -68,11 +73,10 @@ methods : {
 }
 h1 {
    font-weight: 700; 
-   margin-bottom: 0.5em;
    font-size: 4em;
 }
 h3{
-    margin: 0.6em;
+   
     font-weight: 100;
 }
 
@@ -88,6 +92,7 @@ color: #FFFFFF;
 }
 
 button{
+    z-index: 2;
     background: #20DF7F;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
     border-radius: 0.5em;
