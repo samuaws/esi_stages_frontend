@@ -6,6 +6,7 @@ import Promoteur from "../views/Promoteur.vue"
 import Promoteurs from "../views/Promoteurs.vue"
 import Stages from "../views/Stages.vue"
 import Stage from "../views/Stage.vue"
+import Encadreurs from "../views/Encadreurs.vue"
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,11 @@ const routes = [
     path: '/stage/:id',
     name: 'Stage',
     component: Stage
+  },
+  {
+    path: '/encadreurs',
+    name: 'Encadreurs',
+    component: Encadreurs
   },
 ]
 

@@ -21,7 +21,7 @@
                         <h5 class="textd" v-if="!this.user.is_Admin" >entreprise :{{this.stage.entreprise.name}}</h5>
                         <h5 class="textd" v-if="this.user.is_Admin">groupe:{{this.stage.group}}</h5>
                         <button class="bric-btn" v-if="this.user.is_Admin" @click=" onClick">update</button>    
-                        <button class="bric-btn1" v-if="!this.user.is_Admin" @click="onClickApply">Apply now</button>    
+                        <button class="bric-btn" v-if="!this.user.is_Admin" @click="onClickApply">Apply now</button>    
                     </div>
                 </div>
                 </div>
@@ -60,10 +60,7 @@
                                                     
                                 </div>
                     </form>
-                </div>
-                   
-                    
-                
+                </div>  
               </div>   
             </div> 
 
