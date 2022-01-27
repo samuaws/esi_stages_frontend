@@ -1,30 +1,12 @@
 <template>
 <div class="everything">
-<div>
-  <b-navbar type="dark" variant="dark">
-    <b-navbar-nav>
-      <b-nav-item href="#">Home</b-nav-item>
-
-      <!-- Navbar dropdowns -->
-      <b-nav-item-dropdown text="Lang" right>
-        <b-dropdown-item href="#">EN</b-dropdown-item>
-        <b-dropdown-item href="#">ES</b-dropdown-item>
-        <b-dropdown-item href="#">RU</b-dropdown-item>
-        <b-dropdown-item href="#">FA</b-dropdown-item>
-      </b-nav-item-dropdown>
-
-      <b-nav-item-dropdown text="User" right>
-        <b-dropdown-item href="#">Account</b-dropdown-item>
-        <b-dropdown-item href="#">Settings</b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-navbar-nav>
-  </b-navbar>
-</div>
+  <NavBar />
   <v-data-table
     :headers="headers"
     :items="encadreur"
     sort-by="calories"
     class="elevation-1"
+    color :
   >
     <template v-slot:top>
       <v-toolbar
@@ -175,7 +157,12 @@
 
 <script>
   import axios from 'axios'
+  import NavBar from '../components/NavBar.vue'
   export default {
+  
+  components : {
+    NavBar
+  },
     data: () => ({
       dialog: false,
       dialogDelete: false,
