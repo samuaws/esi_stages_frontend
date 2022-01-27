@@ -1,6 +1,5 @@
 <template>
 <div class="everything">
-        <NavBar />
         <div class="head-div">
              <h1>FIND YOUR STAGE YA LHABSINE TA3 L'ESI</h1>
         </div>  
@@ -22,7 +21,7 @@
                         <h5 class="textd" v-if="!this.user.is_Admin" >entreprise :{{this.stage.entreprise.name}}</h5>
                         <h5 class="textd" v-if="this.user.is_Admin">groupe:{{this.stage.group}}</h5>
                         <button class="bric-btn" v-if="this.user.is_Admin" @click=" onClick">update</button>    
-                        <button class="bric-btn" v-if="!this.user.is_Admin &&  apply_btn" @click="onClickApply">Apply now</button>    
+                        <button class="bric-btn" v-if="!this.user.is_Admin" @click="onClickApply">Apply now</button>    
                     </div>
                 </div>
                 </div>
@@ -55,7 +54,6 @@
                                 <input  type="text" placeholder="matricule 1" v-model="matricule1">
                                 <input v-if="!ouvrier" type="text" placeholder="matricule 2" v-model="matricule2">
                                 <input v-if="!ouvrier" type="text" placeholder="matricule 3" v-model="matricule3"> 
-                              
                                 <div class="bricolage2">
                                 <button class="bla"  @click="onClickApply">cancel  </button> 
                                     <button v-on:click=" handle_apply">submit</button>      
@@ -74,12 +72,8 @@
 </template>
 <script>
 import axios from 'axios'
-  import NavBar from '../components/NavBar.vue'
 export default {
     name:"Stage",
-     components : {
-    NavBar
-  },
     data() {
     return {
         stage :{},
@@ -95,6 +89,7 @@ export default {
         promoteur : undefined,
         group : undefined,
         entreprise : undefined,
+        Available : undefined,
         annee : undefined,
         matricule1: undefined,
         matricule2: undefined,
@@ -104,8 +99,7 @@ export default {
         ouvrier: undefined,
         PFE: undefined,
         user : undefined,
-        etudiants : [],
-        apply_btn : true
+        etudiants : []
         }
     },
     methods:{
@@ -115,6 +109,7 @@ export default {
       onClickApply(){
           this.lyes=!this.lyes
           this.yes=!this.yes 
+
       },
     handle_submit(){
         console.log(this.Encadreur);
@@ -136,6 +131,7 @@ export default {
             Authorization:'Bearer '+localStorage.getItem('token')
              }
             }).then((res)=>{
+
                 if(res.status == 201)
                 {
                      location.reload();
@@ -153,6 +149,7 @@ export default {
             "m2":this.matricule2,
             "m3":this.matricule3,
             "m4":this.user.matricule
+
         },
          {
                  headers : {
@@ -160,24 +157,10 @@ export default {
              }
             }
         )
+        console.log(grp.data._id);
         await axios.put("/stage/grp/"+this.stage._id,{
             "grp_id" : grp.data._id
         })
-       await axios.put("/stage/"+this.id,{
-           
-            "Available" : false
-            
-            },
-            {
-                 headers : {
-            Authorization:'Bearer '+localStorage.getItem('token')
-             }
-            }).catch((e)=>{
-                console.log(e);
-            });
-            this.lyes=!this.lyes
-            this.yes=!this.yes 
-            this.apply_btn = false 
     }
     },
   async created(){
@@ -200,6 +183,8 @@ export default {
     
     },
 }
+
+
 </script>
 <style scoped>
 .everything{
@@ -245,6 +230,8 @@ h5{
   padding:0%;
   margin-right:0%
 }
+
+
 button{
 background: #20DF7F;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
@@ -258,6 +245,7 @@ font-family: Lexend Deca;
 font-style: normal;
 color: #FFFFFF;
 width: 20%;
+
 }
 input{
 background: #093545;
@@ -283,17 +271,21 @@ color: #FFFFFF;
     display: flex;
     flex-direction: column;
     padding: auto;
+
 }
 .bricolage2{
     display: flex;
     flex-direction: row;
     padding: auto;
+
 }
 .formd2{
   margin: auto;
   width: 50%;
   padding: 10px;
+
 }
+
 .info{
     background:#093545;
     display: flex;
@@ -326,6 +318,7 @@ color: #FFFFFF;
     flex-direction: column;
     width: 50%;
 }
+
 .form-right{
     display: flex;
     flex-direction: column;
@@ -351,4 +344,7 @@ color: #FFFFFF;
     padding-left:20%;
     padding-top:3%
 }
+
+
+
 </style>

@@ -7,9 +7,6 @@ import Promoteurs from "../views/Promoteurs.vue"
 import Stages from "../views/Stages.vue"
 import Stage from "../views/Stage.vue"
 import Encadreurs from "../views/Encadreurs.vue"
-import Admin from "../views/Admin.vue"
-
-
 
 Vue.use(VueRouter)
 
@@ -32,12 +29,6 @@ const routes = [
     name: 'Signup',
     component: Signup
   },
-  {
-    path: '/admin',
-    name: 'Admin',
-    component: Admin
-  },
-  
   {
     path: '/promoteur/:id',
     name: 'Promoteur',
@@ -63,7 +54,6 @@ const routes = [
     name: 'Encadreurs',
     component: Encadreurs
   },
-
 ]
 
 const router = new VueRouter({
