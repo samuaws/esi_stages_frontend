@@ -2,7 +2,7 @@
 <div class="everything">
    <NavBar />
   <div class="head-div">
-             <h1 class="title-big">GROUP</h1>
+             <h1 class="title-big">GROUPE</h1>
         </div>  
   <v-data-table
     :headers="headers"
@@ -14,7 +14,7 @@
       <v-toolbar
         flat
       >
-        <v-toolbar-title>Group</v-toolbar-title>
+        <v-toolbar-title>group</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset
@@ -60,7 +60,7 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.last_Name"
+                      v-model="editedItem.type"
                       label="type"
                     ></v-text-field>
                   </v-col>
@@ -70,8 +70,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.tlf"
-                      label="telephone"
+                      v-model="editedItem.matricule1"
+                      label="matricule 1"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -80,8 +80,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.email"
-                      label="email"
+                      v-model="editedItem.matricule2"
+                      label="matricule2"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -90,8 +90,18 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.entreprise.name"
-                      label="nom entreprise"
+                      v-model="editedItem.matricule3"
+                      label="matricule3"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.matricule4"
+                      label="matricule 4"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -168,39 +178,48 @@
     data: () => ({
       dialog: false,
       dialogDelete: false,
+     // etud:[],
       headers: [
         {
-          text: 'nom du groupe',
+          text: 'nom groupe',
           align: 'start',
           sortable: false,
           value: 'name',
         },
-        { text: 'matricule 1', value: 'etudiants[0]' },
-         { text: 'matricule 2', value: 'etudiants[1]' },
-        { text: 'matricule 3', value: 'etudiants[2]' },
-        { text: 'entreprise', value: 'etudiants[3]', sortable: false },
+        { text: 'type', value: 'type' },
+        { text: 'Matricule 1', value: 'etudiants[0].matricule' },
+         { text: 'Matricule 2', value: 'etudiants[1].matricule' },
+        { text: 'Matricule 3', value: 'etudiants[2].matricule' },
+        { text: 'Matricule 4', value: 'etudiants[3].matricule', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       group: [],
       editedIndex: -1,
       editedItem: {
-          name:""
-      },
+          name:"",
+          type:"",
+          matricule1:"",
+          matricule2:"",
+          matricule3:"",
+          matricule4:"",
+
+        },
+      
       defaultItem: {
           
-        first_Name: "",
-        last_Name:"",
-        tlf: "",
-        email: "",
-        entreprise:{
-            name : ""
-        }
+          name:"",
+          type:"",
+          matricule1:"",
+          matricule2:"",
+          matricule3:"",
+          matricule4:"",
+
       },
     }),
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New groupe' : 'Edit groupe'
+        return this.editedIndex === -1 ? 'New group' : 'Edit group'
       },
     },
 
@@ -221,19 +240,19 @@
      async initialize () {
        const h = await axios.get("/group")
        this.group = h.data;
-       console.log(this.encadreur);
+ 
     },
   
       
 
       editItem (item) {
-        this.editedIndex = this.encadreur.indexOf(item)
+        this.editedIndex = this.group.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
 
       deleteItem (item) {
-        this.editedIndex = this.encadreur.indexOf(item)
+        this.editedIndex = this.group.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
         console.log(this.editedItem)
@@ -270,27 +289,28 @@
 
       save () {
         if(this.editedIndex === -1 ){
-        axios.post("/group",{
-           "name" : this.editedItem.name,
+          axios.post("/group",{
+            "name" : this.editedItem.name,
            "type" : this.editedItem.type,
-            "m1"  :this.editedItem.mat1,
-            "m2" : this.editedItem.mat2,
-            "m3" : this.editedItem.mat3,
-            "m4" : this.editedItem.mat4,
+           "m1" : this.editedItem.matricule1,
+            "m2"  :this.editedItem.matricule2,
+            "m3" : this.editedItem.matricule3,
+            "m4" : this.editedItem.matricule4,
             },
             {
-                 headers : {
-            Authorization:'Bearer '+localStorage.getItem('token')
+              headers : {
+                Authorization:'Bearer '+localStorage.getItem('token')
              }
             }).then((res)=>{
-
-                if(res.status == 201)
+              
+              if(res.status == 201)
                 {
-                    location.reload();
+                  location.reload();
                 }
             }).catch((e)=>{
-                console.log(e);
+              console.log(e);
             })
+              console.log(this.editedItem.matricule1);
             this.group.push(this.editedItem)
       }
       else{
@@ -299,8 +319,12 @@
         console.log("rjrbffjsrbkfsr");
         console.log(this.editedItem.first_Name);
         axios.put("/group/"+this.group[this.editedIndex]._id,{
-              "name" : this.editedItem.name,
-              "type" : this.editedItem.type,
+         "name" : this.editedItem.name,
+         "type" : this.editedItem.type,
+           "m1" : this.editedItem.matricule1,
+            "m2"  :this.editedItem.matricule2,
+            "m3" : this.editedItem.matricule3,
+            "m4" : this.editedItem.matricule4,
             },
             {
                  headers : {

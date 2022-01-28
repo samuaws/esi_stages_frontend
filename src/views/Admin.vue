@@ -1,4 +1,4 @@
-<template>
+<template >
 <div class="everything">
   <NavBar />
   <div class="head-div">

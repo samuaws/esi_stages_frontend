@@ -1,6 +1,7 @@
 <template>
 <div class="everything">
         <div class="head-div">
+            <NavBar />
              <h1>FIND YOUR STAGE YA LHABSINE TA3 L'ESI</h1>
         </div>  
 
@@ -74,6 +75,7 @@
 import axios from 'axios'
 export default {
     name:"Stage",
+    
     data() {
     return {
         stage :{},
@@ -153,7 +155,8 @@ export default {
 
         },
         )
-            console.log(grp.data._id);
+         console.log(this.user.matricule);
+         console.log(grp.data._id);
         await axios.put("/stage/grp/"+this.id,{
             "grp_id" : grp.data._id
         })

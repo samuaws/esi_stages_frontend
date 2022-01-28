@@ -37,15 +37,7 @@ export default {
   data(){
     return {
       sidebar: false,
-      menuItems: [
-          { title: 'Statistique', path: '/statisique', icon: 'lock_open' },
-          { title: 'Etudiants', path: '/etudiants', icon: 'lock_open' },
-          { title: 'Emcadreur', path: '/emcadreurs', icon: 'lock_open' },
-          { title: 'Entreprise', path: '/entreprise', icon: 'lock_open' },
-          { title: 'Stages', path: '/stages', icon: 'lock_open' },
-          { title: 'Sign Up', path: '/signup', icon: 'face' },
-          { title: 'Change Account', path: '/login', icon: 'lock_open' },
-     ]
+      menuItems: []
     }
   },
  async  created(){
@@ -58,9 +50,34 @@ export default {
         }
       })
       }
-  if(this.user){
-    this.menuItems[5].title = this.user.data.username
+      console.log(this.user.data.is_Admin);
+       if(this.user){
+     if(this.user.data.is_Admin){
+       this.menuItems=[      
+         { title: 'Etudiants', path: '/etudiants', icon: 'lock_open' },
+          { title: 'groupe', path: '/group', icon: 'lock_open' },
+          { title: 'validation', path: '/admin', icon: 'lock_open' },
+          { title: 'Entreprise', path: '/entreprise', icon: 'lock_open' },
+          { title: 'Statistique', path: '/statistique', icon: 'lock_open' },
+          { title: 'Encadreur', path: '/encadreurs', icon: 'lock_open' },
+          { title: 'Promoteur', path: '/promoteurs', icon: 'lock_open' },
+          { title: 'Stages', path: '/stages', icon: 'lock_open' },
+          { title: 'Sign Up', path: '/signup', icon: 'face' },
+          { title: 'Change Account', path: '/login', icon: 'lock_open' },]
+               this.menuItems[8].title = this.user.data.username
+     }
+  else{    
+    console.log("hnaaaaaa");
+          this.menuItems=[  
+            { title: 'Statistique', path: '/statistique', icon: 'lock_open' },
+          { title: 'Promoteur', path: '/promoteurs', icon: 'lock_open' },
+          { title: 'Stages', path: '/stages', icon: 'lock_open' },
+          { title: 'Sign Up', path: '/signup', icon: 'face' },
+          { title: 'Change Account', path: '/login', icon: 'lock_open' },
+          ]
+         this.menuItems[3].title = this.user.data.username
   }
+            }
   }
 };
 </script>

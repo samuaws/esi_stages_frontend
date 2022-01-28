@@ -1,5 +1,6 @@
 <template>
 <div class="everything">
+       <NavBar />
         <div class="head-div">
              <h1>FIND YOUR STAGE YA LHABSINE TA3 L'ESI</h1>
         </div> 
@@ -106,6 +107,7 @@
 <script>
 import axios from 'axios'
 export default {
+  
     name:"Stages",
     data() {
     return {
