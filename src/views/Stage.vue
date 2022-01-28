@@ -157,7 +157,7 @@ export default {
              }
             }
         )
-        console.log(grp.data._id);
+        console.log("grp.data._id");
         await axios.put("/stage/grp/"+this.stage._id,{
             "grp_id" : grp.data._id
         })

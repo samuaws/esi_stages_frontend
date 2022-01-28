@@ -4,7 +4,7 @@ export const planetChartData = {
       labels: ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"],
       datasets: [
         {
-          label: "Number of Moons",
+          label: "Number of oosn",
           data: [0, 0, 1, 2, 79, 82, 27, 14],
           backgroundColor: "rgba(54,73,93,.5)",
           borderColor: "#36495d",
@@ -36,3 +36,37 @@ export const planetChartData = {
   };
   
   export default planetChartData;
+  async created(){
+    // const stages = await axios.get("/stage/PFE");
+     const h = await axios.get("/entreprise");
+         console.log(h.data);
+     for (var ent of h.data)
+     {
+         this.entreprise.push(ent.name);
+     
+     }
+        
+      this.dataChart1.data.labels = this.entreprise
+      let le = this.entreprise.length;
+      var cmp = new Array(le);
+      for(var i=0;i<le;++i)
+      {cmp[i] = 1}
+      
+      const y = await axios.get("/stage/annee")
+      console.log(y.data);
+      for (var f of y.data)
+      {
+          this.datasets1.push(
+              {
+         label: f.toString(),
+         data: cmp,
+         backgroundColor: `rgba(${f/100},73,93,.5)`,
+         borderColor: "#36495d",
+         borderWidth: 3
+       }
+
+          )
+      }
+      this.dataChart1.data.datasets = this.datasets1
+      console.log(this.dataChart1);
+ },
