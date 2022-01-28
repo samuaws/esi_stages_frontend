@@ -19,9 +19,9 @@
                           <h5 class="textd" v-if="this.user.is_Admin" >annee :{{this.stage.annee}}</h5>
                     <div class="bric">
                         <h5 class="textd" v-if="!this.user.is_Admin" >entreprise :{{this.stage.entreprise.name}}</h5>
-                        <h5 class="textd" v-if="this.user.is_Admin">groupe:{{this.stage.group}}</h5>
+                        <h5 class="textd" v-if="this.user.is_Admin">groupe:{{this.stage.group.name}}</h5>
                         <button class="bric-btn" v-if="this.user.is_Admin" @click=" onClick">update</button>    
-                        <button class="bric-btn" v-if="!this.user.is_Admin" @click="onClickApply">Apply now</button>    
+                        <button class="bric-btn" v-if="!this.user.is_Admin && apply_btn" @click="onClickApply">Apply now</button>    
                     </div>
                 </div>
                 </div>
@@ -80,6 +80,7 @@ export default {
         id :this.$route.params.id,    
         yes:false,
         lyes:false,
+        apply_btn:true,
         name : undefined,
         Type : undefined,
         description  : undefined,
@@ -151,17 +152,16 @@ export default {
             "m4":this.user.matricule
 
         },
-         {
-                 headers : {
-            Authorization:'Bearer '+localStorage.getItem('token')
-             }
-            }
         )
-        console.log("grp.data._id");
-        await axios.put("/stage/grp/"+this.stage._id,{
+            console.log(grp.data._id);
+        await axios.put("/stage/grp/"+this.id,{
             "grp_id" : grp.data._id
         })
-    }
+
+            this.lyes=!this.lyes
+            this.yes=!this.yes 
+            this.apply_btn = false 
+     }
     },
   async created(){
     console.log(this.id);

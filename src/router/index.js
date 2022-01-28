@@ -10,6 +10,7 @@ import Encadreurs from "../views/Encadreurs.vue"
 import Etudiants from "../views/Etudiants.vue"
 import Admin from "../views/Admin.vue"
 import Statistique from "../views/Statistique.vue"
+import Group from "../views/Group.vue"
 
 Vue.use(VueRouter)
 
@@ -46,6 +47,11 @@ const routes = [
     path: '/promoteurs',
     name: 'Promoteurs',
     component: Promoteurs
+  },
+  {
+    path: '/group',
+    name: 'Group',
+    component: Group
   },
   {
     path: '/stages',
