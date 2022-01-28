@@ -7,6 +7,9 @@ import Promoteurs from "../views/Promoteurs.vue"
 import Stages from "../views/Stages.vue"
 import Stage from "../views/Stage.vue"
 import Encadreurs from "../views/Encadreurs.vue"
+import Etudiants from "../views/Etudiants.vue"
+import Admin from "../views/Admin.vue"
+import Statistique from "../views/Statistique.vue"
 
 Vue.use(VueRouter)
 
@@ -28,6 +31,11 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: Signup
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin
   },
   {
     path: '/promoteur/:id',
@@ -53,6 +61,16 @@ const routes = [
     path: '/encadreurs',
     name: 'Encadreurs',
     component: Encadreurs
+  },
+  {
+    path: '/etudiants',
+    name: 'Etudiants',
+    component: Etudiants
+  },
+  {
+    path: '/statistique',
+    name: 'Statistique',
+    component: Statistique
   },
 ]
 

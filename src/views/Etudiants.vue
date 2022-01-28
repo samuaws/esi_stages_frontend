@@ -2,11 +2,11 @@
 <div class="everything">
    <NavBar />
   <div class="head-div">
-             <h1 class="title-big">ENCADREURS</h1>
+             <h1 class="title-big">ETUDIANTS</h1>
         </div>  
   <v-data-table
     :headers="headers"
-    :items="encadreur"
+    :items="etudiant"
     sort-by="calories"
     class="elevation-1"
   >
@@ -14,7 +14,7 @@
       <v-toolbar
         flat
       >
-        <v-toolbar-title>ENCADREUR</v-toolbar-title>
+        <v-toolbar-title>Etudiants</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset
@@ -27,13 +27,14 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              color="primary"
+              color="rgb(37, 119, 26)"
               dark
               class="mb-2"
               v-bind="attrs"
               v-on="on"
+
             >
-              New Item
+              New Etudiant
             </v-btn>
           </template>
           <v-card>
@@ -70,8 +71,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.tlf"
-                      label="telephone"
+                      v-model="editedItem.username"
+                      label="username"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -90,8 +91,19 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.entreprise.name"
-                      label="nom entreprise"
+                      v-model="editedItem.matricule"
+                      label="matricule"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                    
+                  >
+                    <v-text-field
+                      v-model="editedItem.password"
+                      label="password"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -119,7 +131,7 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-title class="text-h5">Are you sure you want to delete this etudiant?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -133,12 +145,14 @@
     <template v-slot:item.actions="{ item }">
       <v-icon
         small
+        
         class="mr-2"
         @click="editItem(item)"
       >
         mdi-pencil
       </v-icon>
       <v-icon
+        
         small
         @click="deleteItem(item)"
       >
@@ -176,38 +190,34 @@
           value: 'last_Name',
         },
         { text: 'First name', value: 'first_Name' },
-         { text: 'email', value: 'email' },
-        { text: 'telephone', value: 'tlf' },
-        { text: 'entreprise', value: 'entreprise.name', sortable: false },
+         { text: 'username', value: 'username' },
+        { text: 'email', value: 'email' },
+        { text: 'matricule', value: 'matricule', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
-      encadreur: [],
+      etudiant: [],
       editedIndex: -1,
       editedItem: {
-          
+        username : "", 
         first_Name: "",
         last_Name:"",
-        tlf: "",
+        matricule: "",
         email: "",
-        entreprise:{
-            name : ""
-        }
+
+
       },
       defaultItem: {
-          
+        username : "", 
         first_Name: "",
         last_Name:"",
-        tlf: "",
+        matricule: "",
         email: "",
-        entreprise:{
-            name : ""
-        }
       },
     }),
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Encadreur' : 'Edit Encadreur'
+        return this.editedIndex === -1 ? 'New Etudiant' : 'Edit Etudiant'
       },
     },
 
@@ -226,21 +236,26 @@
 
     methods: {
      async initialize () {
-       const h = await axios.get("/encadreur")
-       this.encadreur = h.data;
-       console.log(this.encadreur);
+       const h = await axios.get("/users/admin",{
+                 headers : {
+            Authorization:'Bearer '+localStorage.getItem('token')
+             }
+            })
+         this.etudiant = h.data;
+         console.log(this.etudiant);
+       
     },
   
       
 
       editItem (item) {
-        this.editedIndex = this.encadreur.indexOf(item)
+        this.editedIndex = this.etudiant.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
 
       deleteItem (item) {
-        this.editedIndex = this.encadreur.indexOf(item)
+        this.editedIndex = this.etudiant.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
         console.log(this.editedItem)
@@ -249,13 +264,14 @@
       },
 
       deleteItemConfirm () {
-            axios.delete("/encadreur/"+this.encadreur[this.editedIndex]._id,
+          console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+            axios.delete("/users/"+this.etudiant[this.editedIndex]._id,
             {
                  headers : {
             Authorization:'Bearer '+localStorage.getItem('token')
              }
             })
-        this.encadreur.splice(this.editedIndex, 1)
+        this.etudiant.splice(this.editedIndex, 1)
         this.closeDelete()
       },
 
@@ -276,13 +292,15 @@
       },
 
       save () {
+          console.log("pffffffffffffffffffffffffffffffff")
         if(this.editedIndex === -1 ){
-        axios.post("/encadreur",{
+        axios.post("/signup",{
            "first_Name" : this.editedItem.first_Name,
            "last_Name" : this.editedItem.last_Name,
             "email"  :this.editedItem.email,
-            "tlf" : this.editedItem.tlf,
-            "entreprise" : this.editedItem.entreprise,
+            "username" : this.editedItem.username,
+            "matricule" : this.editedItem.matricule,
+            "password" : this.editedItem.password,
             },
             {
                  headers : {
@@ -297,19 +315,21 @@
             }).catch((e)=>{
                 console.log(e);
             })
-            this.encadreur.push(this.editedItem)
+            this.etudiant.push(this.editedItem)
       }
       else{
         if (this.editedIndex > -1) {
-          Object.assign(this.encadreur[this.editedIndex], this.editedItem)
+          Object.assign(this.etudiant[this.editedIndex], this.editedItem)
         console.log("rjrbffjsrbkfsr");
         console.log(this.editedItem.first_Name);
-        axios.put("/encadreur/"+this.encadreur[this.editedIndex]._id,{
+        axios.put("/users/"+this.etudiant[this.editedIndex]._id,{
            "first_Name" : this.editedItem.first_Name,
            "last_Name" : this.editedItem.last_Name,
             "email"  :this.editedItem.email,
-            "tlf" : this.editedItem.tlf,
-            "entreprise" : this.editedItem.entreprise,
+            "username" : this.editedItem.username,
+            "matricule" : this.editedItem.matricule,
+            "password" : this.editedItem.password,
+            
             },
             {
                  headers : {
@@ -325,7 +345,7 @@
                 console.log(e);
             })
         } else {
-          this.encadreur.push(this.editedItem)
+          this.etudiant.push(this.editedItem)
         }
       }
         this.close()
@@ -360,6 +380,6 @@ font-family: Lexend Deca;
 font-size:5em ;
 margin-left:30%;
 color: #383838;
-box-shadow: 7px 5px 5px red;
+box-shadow: 7px 5px 5px rgb(37, 119, 26);
 }
 </style>
