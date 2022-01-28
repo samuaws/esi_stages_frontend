@@ -31,18 +31,37 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "NavBar",
   data(){
     return {
       sidebar: false,
       menuItems: [
-          { title: 'Home', path: '/home', icon: 'home' },
+          { title: 'Statistique', path: '/statisique', icon: 'lock_open' },
+          { title: 'Etudiants', path: '/etudiants', icon: 'lock_open' },
+          { title: 'Emcadreur', path: '/emcadreurs', icon: 'lock_open' },
+          { title: 'Entreprise', path: '/entreprise', icon: 'lock_open' },
+          { title: 'Stages', path: '/stages', icon: 'lock_open' },
           { title: 'Sign Up', path: '/signup', icon: 'face' },
-          { title: 'Sign In', path: '/signin', icon: 'lock_open' }
+          { title: 'Change Account', path: '/login', icon: 'lock_open' },
      ]
     }
   },
+ async  created(){
+      if(localStorage.getItem('token'))
+      {
+       
+          this.user = await axios.get("users",{
+            headers : {
+                        Authorization:'Bearer '+localStorage.getItem('token')
+        }
+      })
+      }
+  if(this.user){
+    this.menuItems[5].title = this.user.data.username
+  }
+  }
 };
 </script>
 <style>

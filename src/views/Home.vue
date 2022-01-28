@@ -1,5 +1,6 @@
 <template>
   <div class="everything">
+    <NavBar />
     <img alt="Vue logo" src="../assets/logo.png">
     
     <h3 v-if="show" class="yess" >Welcome {{ this.user.data.first_Name }}</h3>
@@ -11,12 +12,13 @@
 <script>
 // @ is an alias to /src
 import axios from 'axios'
-
-export default {
-  name: 'Home',
-  components: {
-   
-  },
+ import NavBar from '../components/NavBar.vue'
+  export default {
+    name: 'Home',
+      components : {
+       NavBar
+                  },
+ 
   data(){
     return {
 
