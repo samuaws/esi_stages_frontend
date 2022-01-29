@@ -11,6 +11,7 @@ import Etudiants from "../views/Etudiants.vue"
 import Admin from "../views/Admin.vue"
 import Statistique from "../views/Statistique.vue"
 import Group from "../views/Group.vue"
+import Entreprise from "../views/Entreprise.vue"
 
 Vue.use(VueRouter)
 
@@ -77,6 +78,11 @@ const routes = [
     path: '/statistique',
     name: 'Statistique',
     component: Statistique
+  },
+  {
+    path: '/entreprise',
+    name: 'Entreprise',
+    component: Entreprise
   },
 ]
 
