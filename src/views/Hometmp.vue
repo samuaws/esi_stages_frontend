@@ -25,7 +25,7 @@
        <v-expand-transition>
           <div
             v-if="hover"
-            class="d-flex transition-fast-in-fast-out yellow darken-2 v-card--reveal text-h2 white--text justify-center align-center"
+            class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal text-h1 bg--text justify-center align-center"
             style="height: 100%;"
           >
            {{titles[n-1]}}
@@ -67,7 +67,8 @@ import NavBar from '../components/NavBar.vue'
 
             titles : ["Stages","Promoteur","Demandes de stage","Statistique","Encadreur","Groupes","Entreprises","Etudiants"],
             links : ["stages","promoteurs","admin","statistique","encadreurs","group","entreprise","etudiants"],
-            pictures : ["https://i.pinimg.com/564x/97/3f/18/973f18fb3d2756ef92b1cbc8d4ada795.jpg","https://i.pinimg.com/564x/05/9f/9e/059f9ea1d7c64c9397f0f60e03c18756.jpg","https://i.pinimg.com/564x/52/fc/f9/52fcf9b1d15ea32e7040309a7b422f73.jpg","https://i.pinimg.com/564x/aa/0c/30/aa0c3095ee8ac423ad70c8e26a0af2ea.jpg","https://i.pinimg.com/736x/0f/aa/7b/0faa7bbd49871f4c0ed2020bf15d9fe4.jpg","https://i.pinimg.com/564x/58/b1/51/58b151579f23b37439a2e402761162c2.jpg","https://i.pinimg.com/564x/73/7f/ed/737fed4342a910b9d3782315cab19ce9.jpg","https://i.pinimg.com/564x/c3/3b/f9/c33bf910822799b558b5e2e5b7d8c341.jpg"],
+            pictures : ["https://i.pinimg.com/564x/cb/7f/a3/cb7fa3e75e46f1284533615e7d191025.jpg","https://i.pinimg.com/564x/55/65/6f/55656f08a0da30cd96e359e8a36fe303.jpg","https://i.pinimg.com/564x/a1/ae/a3/a1aea3ac0f593a59839a3216d936037a.jpg","https://i.pinimg.com/564x/f3/8d/4b/f38d4b4a182782ff90868c2a8809f23d.jpg","https://i.pinimg.com/564x/4c/79/f8/4c79f83adf150feb8236bb1b3b10eeb4.jpg","https://i.pinimg.com/564x/05/86/9e/05869ea753f92ee8c68308dbc0d68448.jpg","https://i.pinimg.com/564x/f3/1e/d1/f31ed17e9a35749ecf0874da4ac22abd.jpg","https://i.pinimg.com/564x/fe/d4/21/fed4214c045df3155d6dc2f9e8baeff7.jpg"],
+           // pictures : ["https://i.pinimg.com/564x/97/3f/18/973f18fb3d2756ef92b1cbc8d4ada795.jpg","https://i.pinimg.com/564x/05/9f/9e/059f9ea1d7c64c9397f0f60e03c18756.jpg","https://i.pinimg.com/564x/52/fc/f9/52fcf9b1d15ea32e7040309a7b422f73.jpg","https://i.pinimg.com/564x/aa/0c/30/aa0c3095ee8ac423ad70c8e26a0af2ea.jpg","https://i.pinimg.com/736x/0f/aa/7b/0faa7bbd49871f4c0ed2020bf15d9fe4.jpg","https://i.pinimg.com/564x/58/b1/51/58b151579f23b37439a2e402761162c2.jpg","https://i.pinimg.com/564x/73/7f/ed/737fed4342a910b9d3782315cab19ce9.jpg","https://i.pinimg.com/564x/c3/3b/f9/c33bf910822799b558b5e2e5b7d8c341.jpg"],
             col : 3,
             num :0
         }
