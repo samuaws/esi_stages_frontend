@@ -29,7 +29,7 @@ import axios from 'axios'
  data(){
      return {
       dataChart1 : {
-            type: "line",
+            type: "bar",
        data: {
       labels: [],
       datasets: []
@@ -216,9 +216,15 @@ import axios from 'axios'
 </script>
 
 <style>
+
+.chart-container1{
+    margin-bottom: 30%;
+    
+}
 .chart-container2{
-    margin-top:500PX;
+    margin-bottom :30%;
     position: absolute;
+
 }
 .chart-container3{
     margin-top:500PX;

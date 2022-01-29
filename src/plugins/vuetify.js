@@ -7,7 +7,8 @@ export default new Vuetify({
     theme: {
         themes: {
           light: {
-            bg :'#224957'
+            bg :'#224957',
+            turc :  '#30D5C8'
           },
         },
       },
