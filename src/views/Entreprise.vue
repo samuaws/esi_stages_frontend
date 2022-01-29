@@ -14,7 +14,7 @@
       <v-toolbar
         flat
       >
-        <v-toolbar-title>entreprise</v-toolbar-title>
+        <v-toolbar-title>ENTREPRISE</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset

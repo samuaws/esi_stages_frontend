@@ -50,6 +50,9 @@
        mdi-cancel
       </v-icon>
       </template>
+      <template v-slot:item.drive="{ item }">
+        <a :href="`${item.drive}`"  target="_blank">lien</a>
+      </template>
   </v-data-table>
 </div>
 </template>
@@ -74,7 +77,7 @@
         },
         { text: 'nom groupe', value: 'group.name' },
         //hna les fichier li lzm yhthom
-        { text: 'valide', value: 'Valide' },
+        { text: 'DOCUMENTS', value: "drive" },
           { text: 'Actions', value: 'actions', sortable: false },
       ]}),
        created () {

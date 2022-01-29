@@ -14,13 +14,14 @@
                     <h4 class="textd" >description: <br> {{this.stage.description}}</h4>
                     <h5 class="textd" >date debut :{{this.stage.dateDeb.substring(0,10)}}</h5>
                     <h5 class="textd" >date fin :{{this.stage.dateFin.substring(0,10)}}</h5>
-                    <h5 class="textd" >encadreur :{{this.stage.Encadreur.last_Name}}</h5>
-                    <h5 class="textd" >promoteur :{{this.stage.promoteur.last_Name}}</h5>
                     <h5 class="textd"  v-if="this.user.is_Admin" >entreprise :{{this.stage.entreprise.name}}</h5>
-                          <h5 class="textd" v-if="this.user.is_Admin" >annee :{{this.stage.annee}}</h5>
+                    <h5 class="textd" v-if="this.user.is_Admin" >annee :{{this.stage.annee}}</h5>
+                    <h5 class="textd" v-if="!this.user.is_Admin" >entreprise :{{this.stage.entreprise.name}}</h5>
+                    <h5 class="textd" v-if="this.user.is_Admin && this.stage.group">groupe:{{this.stage.group.name}}</h5>
+                    <h5 class="textd" v-if="this.user.is_Admin ">Disponible :{{this.stage.Available}}</h5>
+                    <h5 class="textd" >encadreur :{{this.stage.Encadreur.last_Name}}</h5>
                     <div class="bric">
-                        <h5 class="textd" v-if="!this.user.is_Admin" >entreprise :{{this.stage.entreprise.name}}</h5>
-                        <h5 class="textd" v-if="this.user.is_Admin">groupe:{{this.stage.group.name}}</h5>
+                        <h5 class="textd" >promoteur :{{this.stage.promoteur.last_Name}}</h5>
                         <button class="bric-btn" v-if="this.user.is_Admin" @click=" onClick">update</button>    
                         <button class="bric-btn" v-if="!this.user.is_Admin && apply_btn" @click="onClickApply">Apply now</button>    
                     </div>
@@ -55,6 +56,7 @@
                                 <input  type="text" placeholder="matricule 1" v-model="matricule1">
                                 <input v-if="!ouvrier" type="text" placeholder="matricule 2" v-model="matricule2">
                                 <input v-if="!ouvrier" type="text" placeholder="matricule 3" v-model="matricule3"> 
+                                <input  type="text" placeholder="drive" v-model="drive"> 
                                 <div class="bricolage2">
                                 <button class="bla"  @click="onClickApply">cancel  </button> 
                                     <button v-on:click=" handle_apply">submit</button>      
@@ -73,7 +75,11 @@
 </template>
 <script>
 import axios from 'axios'
+ import NavBar from '../components/NavBar.vue'
 export default {
+  components : {
+       NavBar
+                  },
     name:"Stage",
     
     data() {
@@ -102,7 +108,8 @@ export default {
         ouvrier: undefined,
         PFE: undefined,
         user : undefined,
-        etudiants : []
+        etudiants : [],
+        drive : undefined
         }
     },
     methods:{
@@ -128,6 +135,7 @@ export default {
             "group" : this.group,
             "entreprise" : this.entreprise,
             "annee" : this.annee,
+            
             },
             {
                  headers : {
@@ -151,14 +159,20 @@ export default {
             "m1":this.matricule1,
             "m2":this.matricule2,
             "m3":this.matricule3,
-            "m4":this.user.matricule
+            "m4":this.user.matricule,
+            
 
-        },
+        },{
+                 headers : {
+            Authorization:'Bearer '+localStorage.getItem('token')
+             }
+            }
         )
          console.log(this.user.matricule);
          console.log(grp.data._id);
         await axios.put("/stage/grp/"+this.id,{
-            "grp_id" : grp.data._id
+            "grp_id" : grp.data._id,
+            "drive" : this.drive,
         })
 
             this.lyes=!this.lyes

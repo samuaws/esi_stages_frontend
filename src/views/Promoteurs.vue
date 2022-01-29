@@ -1,12 +1,13 @@
 <template>
 <div class="everything">
-        <div class="head-div">
-             <h1>FIND YOUR promoteur YA LHABSINE TA3 L'ESI</h1>
-        </div> 
+          <NavBar />
+  <div class="head-div">
+             <h1 class="title-big"> PROMOTEURS</h1>
+  </div> 
 
-       <button v-if="user.is_Admin" @click="onClick()" class="btn-right">add</button>
+       <button v-if="user.is_Admin && !yes" @click="onClick()" class="btn-right">New promoteur</button>
        
-       <v-list class="formd2" v-if="!yes" two-line>
+       <v-list class="formd2 bg rounded-lg"  v-if="!yes" two-line>
       <v-list-item-group
         v-model="selected"
         active-class="pink--text"
@@ -16,10 +17,10 @@
           <v-list-item class="item" @click="showPromoteur(prm._id)" :key="prm.description">
             <template >
               <v-list-item-content >
-                <v-list-item-title v-text="showtext(prm.last_Name,prm.first_Name)"></v-list-item-title>
+                <v-list-item-title class="white--text" v-text="showtext(prm.last_Name,prm.first_Name)"></v-list-item-title>
                        
                 <v-list-item-subtitle
-                  class="text--primary"
+                  class="white--text"
                   v-text="prm.domaine"
                 ></v-list-item-subtitle>
 
@@ -37,7 +38,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          color="primary"
+          color="red"
           dark
           v-bind="attrs"
           v-on="on"
@@ -89,6 +90,7 @@
                 <input  type="text" placeholder="domaine" v-model="domaine">
                 <input  type="text" placeholder="discription" v-model="discription">
                 <div class="bricolage">
+                  <button class="bla red"  @click="onClick">cancel  </button> 
                     <button v-on:click="handle_submit">submit</button> 
                 </div>
                </form>
@@ -100,7 +102,11 @@
 </template>
 <script>
 import axios from 'axios'
+ import NavBar from '../components/NavBar.vue'
 export default {
+  components : {
+       NavBar
+                  },
     name:"Promoteurs",
     data() {
     return {
@@ -209,17 +215,6 @@ h3{
     margin: 0.6em;
     font-weight: 100;
 }
-.head-div{
-  background-image: url("../assets/kevin-bhagat-zNRITe8NPqY-unsplash.jpg");
-  z-index: -1;
-  width: 100%;
-  height: 650px;
-  top:0px;
-  right:0px;
-  left:0px;
-  background-size: cover;
-  background-position: center;
-}
 
 .stage {
   padding: 10px 20px;
@@ -272,27 +267,48 @@ color: #FFFFFF;
     display: flex;
     flex-direction: column;
     border-radius: 1em;
-    max-width: 500px;
+    width:35% ;
     align-content: center;
     margin: 0 auto;
     min-height: 300px;
 }
 .bricolage{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: auto;
+    justify-content: space-evenly;
 
 }
-.formd2{
-  margin: auto;
-  width: 50%;
-  
 
-}
+
 .item{
   padding: 20px;
 }
-
-
+.formd2{
+    background:#224957;
+    margin: auto;
+    width: 80%;
+    border-radius: 0.7em;  
+}
+.head-div{
+  background-image: url("../assets/kevin-bhagat-zNRITe8NPqY-unsplash.jpg");
+  z-index: -1;
+  padding-top:13%;
+  padding-left: 25%;
+  width: 100%;
+  height: 650px;
+  top:0px;
+  right:0px;
+  left:0px;
+  background-size: cover;
+  background-position: center;
+}
+.title-big{
+font-family: Lexend Deca;
+font-size:5em ;
+margin-left:30%;
+color: #383838;
+box-shadow: 7px 5px 5px red;
+}
 
 </style>

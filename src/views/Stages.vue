@@ -1,26 +1,26 @@
 <template>
 <div class="everything">
        <NavBar />
-        <div class="head-div">
-             <h1>FIND YOUR STAGE YA LHABSINE TA3 L'ESI</h1>
-        </div> 
-
-       <button v-if="user.is_Admin" @click="onClick()" class="btn-right">add</button>
+  <div class="head-div">
+             <h1 class="title-big"> STAGES</h1>
+  </div>  
+       <button v-if="user.is_Admin && !yes" @click="onClick()" class="btn-right">New stage</button> 
        
-       <v-list class="formd2" v-if="!yes" two-line>
+       <v-list class="formd2  " v-if="!yes" two-line>
       <v-list-item-group
+        
         v-model="selected"
-        active-class="pink--text"
+        active-class="pink--text "
         multiple
       >
         <template   v-for="(stg, index) in this.stage" >
-          <v-list-item class="item" @click="showStage(stg._id)" :key="stg.description">
+          <v-list-item class="item " @click="showStage(stg._id)" :key="stg.description" >
             <template >
               <v-list-item-content >
-                <v-list-item-title v-text="stg.name"></v-list-item-title>
+                <v-list-item-title class="white--text" v-text="stg.name"></v-list-item-title>
                        
                 <v-list-item-subtitle
-                  class="text--primary"
+                  class=" white--text"
                   v-text="showtext(stg.entreprise,stg.Type,stg.dateDeb,stg.dateFin)"
                 ></v-list-item-subtitle>
 
@@ -38,7 +38,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          color="primary"
+          color="red"
           dark
           v-bind="attrs"
           v-on="on"
@@ -58,7 +58,7 @@
           <v-btn
             color="white "
             text
-            class="buttonr"
+            class="buttonr "
             @click="reload"
           >
             cancel
@@ -82,23 +82,28 @@
       </v-list-item-group>
     </v-list>
           
-           <div class="formd">
-             <form v-if="yes" class ="form1" action="" @submit.prevent>
-               <input  type="text" placeholder="name" v-model="name">
-               <input  type="text" placeholder="type" v-model="Type">
-                <input  type="text" placeholder="description" v-model="description">
-                <input  type="date" placeholder="Date de Debut" v-model="dateDeb">
-                <input  type="date" placeholder="date de Fin" v-model="dateFin">
-                <input  type="text" placeholder="encadreur" v-model="Encadreur">
-                <input  type="text" placeholder="groupe" v-model="group">
-                <input  type="text" placeholder="promoteur" v-model="promoteur">
-                <input  type="text" placeholder="entreprise" v-model="entreprise">
-                <input  type="text" placeholder="annee" v-model="annee"> 
-                <div class="bricolage">
-                    <button v-on:click="handle_submit">submit</button> 
-                </div>
-               </form>
-            </div>
+           <div class="formd mt-10 " v-if="yes && !lyes">
+                    <form v-if="yes" class ="form1" action="" @submit.prevent>
+                        <div class="form-left">
+                                <input  type="text" placeholder="name" v-model="name">
+                                <input  type="text" placeholder="type" v-model="Type">
+                                <input  type="text" placeholder="description" v-model="description">
+                                <input  type="date" placeholder="Date de Debut" v-model="dateDeb">
+                                <input  type="date" placeholder="date de Fin" v-model="dateFin">
+                                <button class="bla" v-if="this.user.is_Admin" @click="onClick">cancel  </button> 
+                        </div>
+                        <div class="form-right">
+                             <input  type="text" placeholder="encadreur" v-model="Encadreur">
+                            <input  type="text" placeholder="groupe" v-model="group">
+                            <input  type="text" placeholder="promoteur" v-model="promoteur">
+                            <input  type="text" placeholder="entreprise" v-model="entreprise">
+                            <input  type="text" placeholder="annee" v-model="annee"> 
+                            <div class="bricolage">
+                                    <button v-on:click=" handle_submit">submit</button>                         
+                                </div>
+                        </div>
+                        </form>
+                  </div>    
            
       
 
@@ -106,7 +111,12 @@
 </template>
 <script>
 import axios from 'axios'
-export default {
+ import NavBar from '../components/NavBar.vue'
+  export default {
+     
+      components : {
+       NavBar
+                  },
   
     name:"Stages",
     data() {
@@ -224,6 +234,7 @@ export default {
 <style scoped>
 .everything{
   background: #093545;
+  
 }
 .text{
   font-family: Lexend Deca;
@@ -234,29 +245,23 @@ h2 {
    font-weight: 700; 
    margin: 0.5em;
    font-size: 4em;
+   color: #FFFFFF;
 }
 h3{
     margin: 0.6em;
     font-weight: 100;
+    color: #FFFFFF;
 }
-.head-div{
-  background-image: url("../assets/kevin-bhagat-zNRITe8NPqY-unsplash.jpg");
-  z-index: -1;
-  width: 100%;
-  height: 650px;
-  top:0px;
-  right:0px;
-  left:0px;
-  background-size: cover;
-  background-position: center;
-}
+
 
 .stage {
   padding: 10px 20px;
+  color: #FFFFFF;
 }
 
 button{
 background: #20DF7F;
+ margin: auto;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 border-radius: 0.5em;
 border: none;
@@ -268,6 +273,7 @@ font-family: Lexend Deca;
 font-style: normal;
 color: #FFFFFF;
 }
+
 .buttonr{
 background: red;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
@@ -282,7 +288,7 @@ font-style: normal;
 color: #FFFFFF;
 }
 input{
-background: #224957;
+background: #093545;
 padding : 20px 50px;
 margin :   20px;
 border-radius: 0.5em;
@@ -299,15 +305,18 @@ color: #FFFFFF;
 
 }
 .formd{
+    background: #224957;
     display: flex;
     flex-direction: column;
     border-radius: 1em;
-    max-width: 500px;
+    max-width: 65%;
     align-content: center;
     margin: 0 auto;
     min-height: 300px;
-}
+}  
+
 .bricolage{
+    margin: auto;
     display: flex;
     flex-direction: column;
     padding: auto;
@@ -315,12 +324,73 @@ color: #FFFFFF;
 }
 .formd2{
   margin: auto;
-  width: 50%;
- 
-
+  width: 80%;
+  background:#224957;
+  border-radius: 0.7em;
+  color: #FFFFFF;
 }
 .item{
   padding: 20px;
+  
+}
+.head-div{
+  background-image: url("../assets/kevin-bhagat-zNRITe8NPqY-unsplash.jpg");
+  z-index: -1;
+  padding-top:13%;
+  padding-left: 25%;
+  width: 100%;
+  height: 650px;
+  top:0px;
+  right:0px;
+  left:0px;
+  background-size: cover;
+  background-position: center;
+}
+.title-big{
+font-family: Lexend Deca;
+font-size:5em ;
+margin-left:30%;
+color: #383838;
+box-shadow: 7px 5px 5px red;
+}
+.form1{
+    display: flex;
+    flex-direction: row;
+}
+.form-left{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
 }
 
+.form-right{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.info{
+    background:#093545;
+    display: flex;
+    left:0;
+    margin-top: 5%;
+    margin-right: 10%;
+    margin-left: 10%;
+    flex-direction: column;
+    border-radius: 3%;
+    
+}
+.bla{
+    margin: auto;
+    background-color: red;
+}
+.formd{
+    background: #224957;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    max-width: 65%;
+    align-content: center;
+    margin: 0 auto;
+    min-height: 300px;
+}
 </style>

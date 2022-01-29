@@ -1,13 +1,16 @@
 <template>
   <div class="everything">
       <NavBar />
-      <div class="chart-container1" style="position: relative; height:40vh; width:80vw">
+      <div  class="chart-container1" style=" position: relative; height:40vh; width:80vw">
+      <h1>Répartition des PFE / entreprise.</h1>
       <canvas id="planet-chart1"  ></canvas>
       </div>
       <div class="chart-container2" style="position: relative; height:40vh; width:80vw">
+      <h1>stagiaires retenus par entreprise</h1>
       <canvas id="planet-chart2" ></canvas>
       </div>
       <div class="chart-container3" style="position: relative; height:40vh; width:80vw">
+        <h1>Entreprise par annee</h1>
       <canvas id="planet-chart3" ></canvas>
       </div>
   </div>
@@ -32,7 +35,7 @@ import axios from 'axios'
       datasets: []
     },
     options: {
-      responsive: true,
+      maintainAspectRatio: true,
       lineTension: 1,
       scales: {
         yAxes: [
@@ -89,9 +92,15 @@ import axios from 'axios'
     }
       },
       entreprise : [],
-      datasets1 : [],
+      datasets1 : undefined,
       datasets2 : [],
       datasets3 : [],
+      render1 : false,
+      render2 : false,
+      render3 : false,
+      render4 : false,
+      render5 : false,
+      render6 : false,
       
     }
  },
@@ -106,20 +115,22 @@ import axios from 'axios'
     
   },
   async created(){
-     const stages = await axios.get("/stage/PFE");
-     const y = await axios.get("/stage/annee")
-     const h = await axios.get("/entreprise");
+    
+     var stages =null
+    await axios.get("/stage/PFE").then((res)=>{this.render1=true;stages=res});
+     var y =null
+      await axios.get("/stage/annee").then((res)=>{this.render2=true;y=res})
+     var h = null
+      await axios.get("/entreprise").then((res)=>{this.render3=true;  h=res });
+     console.log(stages);
       for (var ent of h.data)
       {
           this.entreprise.push(ent.name);
       
       }
-      console.log(stages.data);
        this.dataChart1.data.labels = this.entreprise
        let le = this.entreprise.length;
-      //var cmp = new Array(le);
        var D = new Array(100);
-    //    for(var i=0;i<le;++i) {cmp[i] = 0}
     for(var s of stages.data){
             var ind = this.dataChart1.data.labels.indexOf(s.entreprise.name);
             if(D[s.annee%2000]==undefined){
@@ -129,6 +140,7 @@ import axios from 'axios'
             D[s.annee%2000][ind]=D[s.annee%2000][ind]+1;
          
       }
+      this.datasets1 = [];
     for (var f of y.data){
         this.datasets1.push(
          {
@@ -143,23 +155,24 @@ import axios from 'axios'
 
 
     // DATACHART2
-       const SV = await axios.get("/stage/PFEV");
-       console.log(SV);
+       var SV 
+        await axios.get("/stage/PFEV").then((res)=>{this.render4=true;SV=res});
        this.dataChart2.data.labels = this.entreprise
          var E = new Array(100);
     for(var s1 of SV.data){
             var ind1 = this.dataChart2.data.labels.indexOf(s1.entreprise.name);
-            console.log(ind1);
+         
             if(E[s1.annee%2000]==undefined){
               E[s1.annee%2000]=[];
                for(var j=0;j<le;j++) {E[s1.annee%2000][j]= 0;}
-              console.log(E[s1.annee%2000])
+              
             }
+            console.log(s1.group.etudiants);
             E[s1.annee%2000][ind1]=E[s1.annee%2000][ind1]+s1.group.etudiants.length;
-            console.log(E[s1.annee%2000][ind1]);        
+                
       }
     for (var k of y.data){
-        console.log(k);
+    
         this.datasets2.push(
          {
           label:  k.toString(),
@@ -172,28 +185,30 @@ import axios from 'axios'
     // DATACHART3
      
        this.dataChart3.data.labels = y.data
+       console.log(y.data);
        var F = new Array(y.data.length)
        F = []
-     // for(var j=0;j<y.data.length;j++) {F.push(0)}
       for(var y1 of y.data){
             
         await axios.get("/stage/ent/"+y1).then((res)=>{
             F.push(res.data.nbe)
+          console.log(res.data.nbe);
+          this.render5 = true;
 
         })
       }
-      console.log(F);
         this.datasets3.push(
          {
-          label: "hhh",
+          label: "Stages",
           data: F,
           backgroundColor: `rgba(${Math.random()*100},${Math.random()*100},${Math.random()*100},.5)`,
           borderColor: "#36495d",
           borderWidth: 3
         } ) 
     this.dataChart3.data.datasets = this.datasets3
+    this.render6 = true;
+  console.log(this.render6);
   },
-
  
 
 
@@ -203,6 +218,7 @@ import axios from 'axios'
 <style>
 .chart-container2{
     margin-top:500PX;
+    position: absolute;
 }
 .chart-container3{
     margin-top:500PX;

@@ -1,8 +1,6 @@
 <template>
   <div class="nav">
 
-   
-
     <v-toolbar app>
       <span class="hidden-sm-and-up">
         <v-toolbar-side-icon @click="sidebar = !sidebar">
@@ -40,6 +38,16 @@ export default {
       menuItems: []
     }
   },
+    methods:{
+
+    signout(){
+      if(localStorage.getItem('token'))
+      {
+        localStorage.removeItem('token');
+        this.$router.push("/login")
+      }
+    }
+  },
  async  created(){
       if(localStorage.getItem('token'))
       {
@@ -50,30 +58,31 @@ export default {
         }
       })
       }
-      console.log(this.user.data.is_Admin);
        if(this.user){
      if(this.user.data.is_Admin){
        this.menuItems=[      
-         { title: 'Etudiants', path: '/etudiants', icon: 'lock_open' },
-          { title: 'groupe', path: '/group', icon: 'lock_open' },
-          { title: 'validation', path: '/admin', icon: 'lock_open' },
-          { title: 'Entreprise', path: '/entreprise', icon: 'lock_open' },
-          { title: 'Statistique', path: '/statistique', icon: 'lock_open' },
-          { title: 'Encadreur', path: '/encadreurs', icon: 'lock_open' },
-          { title: 'Promoteur', path: '/promoteurs', icon: 'lock_open' },
-          { title: 'Stages', path: '/stages', icon: 'lock_open' },
-          { title: 'Sign Up', path: '/signup', icon: 'face' },
-          { title: 'Change Account', path: '/login', icon: 'lock_open' },]
+         { title: 'Etudiants', path: '/etudiants', icon: 'school' },
+          { title: 'groupe', path: '/group', icon: 'groups' },
+          { title: 'validation', path: '/admin', icon: 'approval' },
+          { title: 'Entreprise', path: '/entreprise', icon: 'domain' },
+          { title: 'Statistique', path: '/statistique', icon: 'equalizer' },
+          { title: 'Encadreur', path: '/encadreurs', icon: 'work' },
+          { title: 'Promoteur', path: '/promoteurs', icon: 'supervisor_account' },
+          { title: 'Stages', path: '/stages', icon: 'format_list_numbered_rtl' },
+          { title: 'Sign Up', path: '/signup', icon: 'account_circle' },
+          { title: 'Sign Up', path: '/signup', icon: 'lock_open' },
+          { title: 'Sign out', path: '/login', icon: 'logout' },]
                this.menuItems[8].title = this.user.data.username
      }
   else{    
     console.log("hnaaaaaa");
           this.menuItems=[  
-            { title: 'Statistique', path: '/statistique', icon: 'lock_open' },
-          { title: 'Promoteur', path: '/promoteurs', icon: 'lock_open' },
+          { title: 'Statistique', path: '/statistique', icon: 'equalizer' },
+          { title: 'Promoteur', path: '/promoteurs', icon: 'supervisor_account' },
           { title: 'Stages', path: '/stages', icon: 'lock_open' },
-          { title: 'Sign Up', path: '/signup', icon: 'face' },
-          { title: 'Change Account', path: '/login', icon: 'lock_open' },
+          { title: 'Sign Up', path: '/signup', icon: 'account_circle' },
+          { title: 'Sign Up', path: '/signup', icon: 'lock_open' },
+          { title: 'Sign out', path: '/login', icon: 'logout' },
           ]
          this.menuItems[3].title = this.user.data.username
   }
