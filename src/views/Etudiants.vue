@@ -104,6 +104,8 @@
                     <v-text-field
                       v-model="editedItem.password"
                       label="password"
+                      type="password"
+                      
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -145,14 +147,23 @@
     <template v-slot:item.actions="{ item }">
       <v-icon
         small
-        
+        color="green"
+        class="mr-2"
+        @click="editItemUser(item)"
+      >
+                mdi-checkbox-marked-circle
+
+      </v-icon>
+      <v-icon
+        small
+        color="black"
         class="mr-2"
         @click="editItem(item)"
       >
         mdi-pencil
       </v-icon>
       <v-icon
-        
+        color="red"
         small
         @click="deleteItem(item)"
       >
@@ -253,6 +264,19 @@
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
+      editItemUser(item)  {
+        this.editedIndex = this.etudiant.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+      axios.put(`/users/${this.etudiant[this.editedIndex]._id}/toAdmin`,
+                {
+
+                },
+                 {
+                 headers : {
+                 Authorization:'Bearer '+localStorage.getItem('token')
+                          }
+                 })
+      }, 
 
       deleteItem (item) {
         this.editedIndex = this.etudiant.indexOf(item)
@@ -264,7 +288,7 @@
       },
 
       deleteItemConfirm () {
-          console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+   
             axios.delete("/users/"+this.etudiant[this.editedIndex]._id,
             {
                  headers : {
@@ -292,7 +316,7 @@
       },
 
       save () {
-          console.log("pffffffffffffffffffffffffffffffff")
+          
         if(this.editedIndex === -1 ){
         axios.post("/signup",{
            "first_Name" : this.editedItem.first_Name,
@@ -363,10 +387,10 @@
   background: #093545;
 }
 .head-div{
-  background-image: url("../assets/kevin-bhagat-zNRITe8NPqY-unsplash.jpg");
+  background-image: url("../assets/ETUDIANTS.jpg");
   z-index: -1;
-  padding-top:13%;
-  padding-left: 25%;
+  padding-top:10%;
+ 
   width: 100%;
   height: 650px;
   top:0px;
@@ -378,8 +402,8 @@
 .title-big{
 font-family: Lexend Deca;
 font-size:5em ;
-margin-left:30%;
+
 color: #383838;
-box-shadow: 7px 5px 5px rgb(37, 119, 26);
+
 }
 </style>

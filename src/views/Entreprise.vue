@@ -2,7 +2,6 @@
 <div class="everything">
    <NavBar />
   <div class="head-div">
-             <h1 class="title-big">entreprise</h1>
         </div>  
   <v-data-table
     :headers="headers"
@@ -317,7 +316,7 @@
   background: #093545;
 }
 .head-div{
-  background-image: url("../assets/kevin-bhagat-zNRITe8NPqY-unsplash.jpg");
+  background-image: url("../assets/ENTREPRISES.jpg");
   z-index: -1;
   padding-top:13%;
   padding-left: 25%;
@@ -333,7 +332,7 @@
 font-family: Lexend Deca;
 font-size:5em ;
 margin-left:30%;
-color: #383838;
-box-shadow: 7px 5px 5px red;
+color: white;
+
 }
 </style>

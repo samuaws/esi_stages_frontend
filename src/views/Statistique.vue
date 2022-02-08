@@ -219,6 +219,7 @@ import axios from 'axios'
 
 .chart-container1{
     margin-bottom: 30%;
+     margin-top:70px;
     
 }
 .chart-container2{
@@ -228,5 +229,6 @@ import axios from 'axios'
 }
 .chart-container3{
     margin-top:500PX;
+    margin-bottom: 25%;
 }
 </style>

@@ -291,7 +291,7 @@ color: #FFFFFF;
     border-radius: 0.7em;  
 }
 .head-div{
-  background-image: url("../assets/kevin-bhagat-zNRITe8NPqY-unsplash.jpg");
+  background-image: url("../assets/PROMOTEURS.jpg");
   z-index: -1;
   padding-top:13%;
   padding-left: 25%;
@@ -307,8 +307,10 @@ color: #FFFFFF;
 font-family: Lexend Deca;
 font-size:5em ;
 margin-left:30%;
+margin-top:3%;
 color: #383838;
 box-shadow: 7px 5px 5px red;
+;
 }
 
 </style>
