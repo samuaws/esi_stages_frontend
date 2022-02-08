@@ -2,14 +2,14 @@
 <div class="everything">
         <div class="head-div">
             <NavBar />
-             <h1>FIND YOUR STAGE YA LHABSINE TA3 L'ESI</h1>
+              <h1 class="title-big"> {{this.stage.name}}</h1>
         </div>  
 
             <div class="info-big">
             <div class="wow">
                 <div class="info">
                 <div v-if="!yes"  class="stage">
-                    <h2 class="textd" >{{this.stage.name}}</h2>
+              
                     <h4 class="textd" >Type :{{this.stage.Type}}</h4>
                     <h4 class="textd" >description: <br> {{this.stage.description}}</h4>
                     <h5 class="textd" >date debut :{{this.stage.dateDeb.substring(0,10)}}</h5>
@@ -232,6 +232,8 @@ h5{
 .head-div{
   background-image: url("../assets/kevin-bhagat-zNRITe8NPqY-unsplash.jpg");
   z-index: -1;
+  padding-top:13%;
+  padding-left: 25%;
   width: 100%;
   height: 650px;
   top:0px;
@@ -344,6 +346,13 @@ color: #FFFFFF;
 .bla{
     margin: auto;
     background-color: red;
+}
+.title-big{
+font-family: Lexend Deca;
+font-size:5em ;
+margin-left:30%;
+color: #383838;
+box-shadow: 7px 5px 5px red;
 }
 .form-div{
     background: #224957;

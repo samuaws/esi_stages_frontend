@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
 
-    <v-toolbar app>
+    <v-app-bar app>
       <span class="hidden-sm-and-up">
         <v-toolbar-side-icon @click="sidebar = !sidebar">
         </v-toolbar-side-icon>
@@ -22,7 +22,7 @@
           {{ item.title }}
         </v-btn>
       </v-toolbar-items>
-    </v-toolbar>
+    </v-app-bar>
 
   </div>
 
