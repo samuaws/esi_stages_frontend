@@ -234,6 +234,8 @@ import axios from 'axios'
 <style scoped>
 .everything{
   background: #093545;
+  height: 100%;
+  
   
 }
 .text{

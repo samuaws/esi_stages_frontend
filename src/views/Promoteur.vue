@@ -1,5 +1,6 @@
 <template>
   <div class="container3" >
+      <NavBar/>
     <div class="div-left" >
         <h1 class="name"> Pr. {{this.promoteur.last_Name}} <br> {{this.promoteur.first_Name}}</h1>
         <ul class="ull" v-if="!yes">
@@ -32,8 +33,12 @@
 
 <script>
 import axios from 'axios'
-export default {
+import NavBar from '../components/NavBar.vue'
+  export default {
 name : "Promoteur",
+ components : {
+       NavBar
+                  },
 data(){
    return {
         id :this.$route.params.id,
@@ -101,7 +106,7 @@ async created(){
 
 <style scoped>
 .name{
-  margin-top:5%;
+  margin-top:8%;
   margin-bottom: 15%;
  font-family: Lexend Deca;
 font-style: normal;

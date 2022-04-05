@@ -147,7 +147,8 @@
     <template v-slot:item.actions="{ item }">
       <v-icon
         small
-        color="green"
+       
+        color="orange"
         class="mr-2"
         @click="editItemUser(item)"
       >
@@ -191,6 +192,7 @@
        NavBar
                   },
     data: () => ({
+      clicked : false,
       dialog: false,
       dialogDelete: false,
       headers: [
@@ -265,6 +267,7 @@
         this.dialog = true
       },
       editItemUser(item)  {
+        this.clicked = !this.clicked
         this.editedIndex = this.etudiant.indexOf(item)
         this.editedItem = Object.assign({}, item)
       axios.put(`/users/${this.etudiant[this.editedIndex]._id}/toAdmin`,
@@ -405,5 +408,11 @@ font-size:5em ;
 
 color: #383838;
 
+}
+.grn{
+ color: green;
+}
+.rd{
+ color: red;
 }
 </style>

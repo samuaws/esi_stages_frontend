@@ -54,7 +54,7 @@ methods : {
                 if(res.status == 201)
                 {
                     console.log("requsting the backend to login")
-                    this.$router.push("/")
+                    this.$router.push("/login")
                 }
             }).catch((e)=>{
                 console.log(e);
